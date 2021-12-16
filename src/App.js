@@ -7,11 +7,11 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Connecting Trainers & Owners since 2021
+          Connecting Pros & Owners since 2021
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="https://google.com"
           target="_blank"
           rel="noopener noreferrer"
         >
