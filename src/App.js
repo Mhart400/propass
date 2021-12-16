@@ -1,12 +1,12 @@
-import React from "react"
+import React from "react";
 import "./App.css";
-import { Button, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import LandingPage from "./Screens/LandingPage";
 
 function App() {
   return (
-    <div className="App">
-      <LandingPage/>
+    <div className="App" style={{height: '100vh'}}>
+      <LandingPage />
     </div>
   );
 }

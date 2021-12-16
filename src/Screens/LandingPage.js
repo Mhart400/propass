@@ -5,14 +5,16 @@ import ropesImg from "../Images/ropes.jpeg";
 
 const LandingPage = () => {
   return (
-    <HeroSection
+    <Grid >
+      <HeroSection
       height="100vh"
       imgSrc={ropesImg}
       imgAlt="skdjfksdfksjd"
       title="ProPass"
       subtitle="Connecting Pro's and Owners"
       btnText="Sign-In"
-    />
+      />
+      </Grid>
   );
 };
 
