@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Grid, Typography, Box } from "@mui/material";
+import { Grid} from "@mui/material";
 import HeroSection from "../Components/HeroSection";
 import ropesImg from "../Images/ropes.jpeg";
 
