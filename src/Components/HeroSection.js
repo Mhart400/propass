@@ -1,3 +1,4 @@
+import React from 'react'
 import { Button, Grid, Typography } from "@mui/material";
 
 const HeroSection = ({ height, imgSrc, imgAlt, title, subtitle, btnText }) => {
