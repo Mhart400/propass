@@ -5,7 +5,7 @@ import ropesImg from "../Images/ropes.jpeg";
 const LandingPage = () => {
   return (
     <HeroSection
-      height="80vh"
+      height="100vh"
       imgSrc={ropesImg}
       imgAlt="skdjfksdfksjd"
       title="ProPass"
