@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          COMING SOON
+          COMING SOON!
         </a>
       </header>
     </div>
