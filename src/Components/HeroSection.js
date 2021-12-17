@@ -1,7 +1,8 @@
-import React from 'react'
-import { Button, Grid, Typography } from "@mui/material";
+import React from "react";
+import { Button, Grid, Typography, Box } from "@mui/material";
+import { Link } from "react-router-dom";
 
-const HeroSection = ({ height, imgSrc, imgAlt, title, subtitle, btnText }) => {
+const HeroSection = ({ height, imgSrc, imgAlt, title, subtitle, btnText, btnLink }) => {
   return (
     <Grid
       component="section"
@@ -18,17 +19,19 @@ const HeroSection = ({ height, imgSrc, imgAlt, title, subtitle, btnText }) => {
         alignItems: "center",
       }}
     >
-      <img
+      <Box
+        component='img'
         src={imgSrc}
         alt={imgAlt}
         height="100%"
-        style={{ minWidth: "100%", flexShrink: 0 }}
+        sx={{ minWidth: "100%", flexShrink: 0 }}
       />
+
       <Grid
         container
         sx={{
           position: "absolute",
-          height: '100%',
+          height: "100%",
           backgroundColor: "rgba(0,0,0, .6)",
         }}
       >
@@ -36,33 +39,43 @@ const HeroSection = ({ height, imgSrc, imgAlt, title, subtitle, btnText }) => {
           container
           item
           flexDirection="column"
-          justifyContent="center"
+          justifyContent="flex-start"
           alignItems="center"
+          sx={{mt: {xs: 5, sm: 10, md: 15, lg: 20}}}
         >
           <Typography
-            variant="h1"
+            
             align="center"
             gutterBottom
             sx={{
               color: "primary.light",
               fontWeight: 400,
+              typography: {xs: 'h3', sm: 'h2', md: 'h1', lg: 'h1'},
             }}
           >
             {title}
           </Typography>
           <Typography
             component="p"
-            variant="h3"
+            
             align="center"
             color="common.white"
             sx={{
               mb: 10,
+              typography: {xs: 'h4', sm: 'h4', md: 'h3', lg: 'h3'},
             }}
           >
             {subtitle}
           </Typography>
-          <Button variant="outlined" color="primary" sx={{ fontSize: "18px", padding: '8px 45px'}}>
-            Sign-in
+          <Button
+            variant="outlined"
+            color="primary"
+            
+            component={Link}
+            to={btnLink}
+            sx={{ fontSize: "18px", padding: "8px 45px" }}
+          >
+            {btnText}
           </Button>
         </Grid>
       </Grid>

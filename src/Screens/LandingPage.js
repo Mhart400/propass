@@ -3,16 +3,18 @@ import { Grid} from "@mui/material";
 import HeroSection from "../Components/HeroSection";
 import ropesImg from "../Images/ropes.jpeg";
 
+const image = ropesImg
 const LandingPage = () => {
   return (
     <Grid >
       <HeroSection
       height="100vh"
-      imgSrc={ropesImg}
+      imgSrc={image}
       imgAlt="skdjfksdfksjd"
       title="ProPass"
       subtitle="Connecting Pro's and Owners"
-      btnText="Sign-In"
+      btnText="Sign-Up"
+      btnLink='/signup'
       />
       </Grid>
   );
