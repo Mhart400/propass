@@ -4,7 +4,7 @@ import HeroSection from "../Components/HeroSection";
 import ropesImg from "../Images/ropes.jpeg";
 
 const image = ropesImg
-const LandingPage = () => {
+const HomeScreen = () => {
   return (
     <Grid >
       <HeroSection
@@ -20,4 +20,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default HomeScreen;
