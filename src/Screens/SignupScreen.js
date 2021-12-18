@@ -47,7 +47,7 @@ const SignupScreen = () => {
   const roleRef = React.useRef();
   
   //AUTH, Error, Loading
-  const {currentUser, signup, auth, logout} = useAuth()
+  const { signup, auth, logout} = useAuth()
   const [error, setError] = React.useState();
   const [loading, setLoading] = React.useState(false);
  
