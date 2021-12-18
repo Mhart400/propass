@@ -13,7 +13,7 @@ const HeroSection = ({ height, imgSrc, imgAlt, title, subtitle, btnText, btnLink
         width: "100vw",
         overflow: "hidden",
         // zIndex: "-100",
-        mb: 15,
+        // mb: 15,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
