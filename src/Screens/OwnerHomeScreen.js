@@ -1,7 +1,6 @@
 import { Container, Box, Typography, Button } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import { signOut } from "firebase/auth";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate} from 'react-router-dom'
 
@@ -9,8 +8,6 @@ function OwnerHomeScreen() {
   const { logout } = useAuth();
   
   const navigate = useNavigate()
-
-
 
   return (
     <>
@@ -26,7 +23,7 @@ function OwnerHomeScreen() {
           >
             Back to Home
           </Button>
-          <Button onClick={logout}>Log Out</Button>
+          <Button onClick={() => {logout(); navigate('/')}}>Log Out</Button>
         </Box>
       </Container>
     </>

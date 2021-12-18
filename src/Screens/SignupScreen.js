@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import states from "../Data/states";
-import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { useAuth } from "../Context/AuthContext";
 
 
