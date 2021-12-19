@@ -6,26 +6,36 @@ import HomeScreen from "./Screens/HomeScreen";
 import SignupScreen from "./Screens/SignupScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import { AuthProvider } from "./Context/AuthContext";
-import OwnerHomeScreen from "./Screens/OwnerHomeScreen";
+import OwnerHomeScreen from "./Screens/OwnerScreens/OwnerHomeScreen";
+import OwnerRoute from "./Route/OwnerRoute";
+import ProRoute from "./Route/ProRoute";
+import ProHomeScreen from "./Screens/ProScreens/ProHomeScreen";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <HeaderMain />
         <div
           className="App"
           style={{
-            height: "calc(100vh - 69px",
+            height: "100%",
+            // height: "calc(100vh - 64px",
             width: "100%",
-            overflowX: "hidden",
+            overflow: "hidden",
           }}
         >
+          <HeaderMain />
+
           <Routes>
-            <Route path="/" element={<HomeScreen />} />
+            <Route exact path="/" element={<HomeScreen />} />
             <Route path="/signup" element={<SignupScreen />} />
             <Route path="/login" element={<LoginScreen />} />
-            <Route path="/ownerHome" element={<OwnerHomeScreen />} />
+            <Route element={<OwnerRoute />}>
+              <Route exact path="/owner" element={<OwnerHomeScreen />} />
+            </Route>
+            <Route path="/pro" element={<ProRoute />}>
+              <Route exact path="/pro/" element={<ProHomeScreen />} />
+            </Route>
           </Routes>
         </div>
       </BrowserRouter>

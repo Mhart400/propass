@@ -9,31 +9,30 @@ import {
   MenuItem,
   Alert,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import states from "../Data/states";
 import { useAuth } from "../Context/AuthContext";
-
+import { collection, addDoc, serverTimestamp } from "firebase/firestore"; 
+import { db } from "../firebase-config";
 
 const roles = [
-  { value: "", label: "" },
-  { value: "Trainer", label: "Trainer" },
+  { value: "Pro", label: "Pro" },
   { value: "Owner", label: "Owner" },
 ];
 
 const SignupScreen = () => {
   //Set the user's Role
-  const [role, setRole] = React.useState('');
+  const [role, setRole] = React.useState("");
   const handleRole = (event) => {
     setRole(event.target.value);
   };
 
   //Set the user's State
-  const [state, setState] = React.useState('');
+  const [state, setState] = React.useState("");
   const handleState = (event) => {
     setState(event.target.value);
   };
-  
-  
+
   //Refs for the Fields
   const firstNameRef = React.useRef();
   const lastNameRef = React.useRef();
@@ -45,14 +44,16 @@ const SignupScreen = () => {
   const stateRef = React.useRef();
   const zipRef = React.useRef();
   const roleRef = React.useRef();
-  
+
   //AUTH, Error, Loading
-  const { signup, auth, logout} = useAuth()
+  const { signup, logout, getProfile } = useAuth();
   const [error, setError] = React.useState();
   const [loading, setLoading] = React.useState(false);
- 
+
+  //Navigate
+  const navigate = useNavigate();
+
   //Logout
- 
 
   //RESET BUTTON
   const handleReset = () => {
@@ -65,7 +66,7 @@ const SignupScreen = () => {
     cityRef.current.value = "";
     stateRef.current.value = "";
     zipRef.current.value = "";
-    roleRef.current.value = "";
+    roleRef.current.value = "Pro";
     setError(false);
     emailRef.current.focus();
   };
@@ -77,18 +78,40 @@ const SignupScreen = () => {
     if (pwRef.current.value !== confirmPwRef.current.value) {
       setError("Passwords do not match!");
       return;
+    } else if (firstNameRef === '' | lastNameRef === '') {
+      setError("First Name and Last Name cannot be blank!");
+      return;
     }
     try {
       setError("");
       setLoading(true);
-      const user = await signup(
-        emailRef.current.value,
-        pwRef.current.value
-      );
-      console.log(user)
+      //Create User via Email & Password
+      const user = await signup(emailRef.current.value, pwRef.current.value);
+      
+
+      // Add User data to Firestore
+      addDoc(collection(db, "Users"), {
+        firstName: firstNameRef.current.value,
+        lastName: lastNameRef.current.value,
+        email: user.user.email,
+        isOwner: roleRef.current.value === 'Owner' ? true : false,
+        isPro: roleRef.current.value === 'Pro' ? true : false,
+        timestamp: serverTimestamp()
+      });
+
+      // Set User Profile in Auth Context
+      const userProfile = await getProfile(user.user.email)
+
+      //Navigate to Home Screen Based on Role
+      if (userProfile["isOwner"] === true) {
+        navigate("/owner/");
+      } else {
+        navigate("/pro/");
+      }
+
     } catch (error) {
       setError(error.message);
-      setLoading(false)
+      setLoading(false);
     }
     setLoading(false);
   }
@@ -101,7 +124,7 @@ const SignupScreen = () => {
           <Button
             component={Link}
             to="/"
-            sx={{ ml: 0, my: 2, width: '150px' }}
+            sx={{ ml: 0, my: 2, width: "150px" }}
             variant="outlined"
             size="small"
           >
@@ -118,12 +141,12 @@ const SignupScreen = () => {
           >
             Sign-up
           </Typography>
-          {auth.currentUser && <Typography>{auth.currentUser.email}</Typography>}
 
           <Box component="form" noValidate autoComplete="off">
             <Grid container direction="column">
               <Grid
-                item container
+                item
+                container
                 direction="row"
                 sx={{ "& .MuiTextField-root": { mr: 2, my: 1, width: "25ch" } }}
               >
@@ -147,7 +170,8 @@ const SignupScreen = () => {
                 />
               </Grid>
               <Grid
-                item container
+                item
+                container
                 direction="row"
                 sx={{ "& .MuiTextField-root": { mr: 2, my: 1, width: "25ch" } }}
               >
@@ -163,7 +187,8 @@ const SignupScreen = () => {
                 {error && <Alert severity="error">{error}</Alert>}
               </Grid>
               <Grid
-                item container
+                item
+                container
                 direction="row"
                 sx={{ "& .MuiTextField-root": { mr: 2, my: 1, width: "25ch" } }}
               >
@@ -184,7 +209,12 @@ const SignupScreen = () => {
                   //   defaultValue="Rowland"
                 />
               </Grid>
-              <Grid item container direction="row" sx={{ width: "100%", my: 1 }}>
+              <Grid
+                item
+                container
+                direction="row"
+                sx={{ width: "100%", my: 1 }}
+              >
                 <TextField
                   required
                   variant="standard"
@@ -196,7 +226,8 @@ const SignupScreen = () => {
                 />
               </Grid>
               <Grid
-                item container
+                item
+                container
                 direction="row"
                 sx={{ "& .MuiTextField-root": { mr: 2, my: 1, width: "15ch" } }}
               >
@@ -236,7 +267,8 @@ const SignupScreen = () => {
                 />
               </Grid>
               <Grid
-                item container
+                item
+                container
                 direction="row"
                 sx={{ "& .MuiTextField-root": { mr: 2, my: 3, width: "25ch" } }}
               >
@@ -275,7 +307,12 @@ const SignupScreen = () => {
                   Reset
                 </Button>
               </Grid>
-              <Grid container direction="row" sx={{ my: 4 }} alignItems="center">
+              <Grid
+                container
+                direction="row"
+                sx={{ my: 4 }}
+                alignItems="center"
+              >
                 <Typography display="inline" sx={{ mr: 1 }}>
                   Already Have an Account?
                 </Typography>

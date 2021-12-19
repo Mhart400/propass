@@ -6,13 +6,17 @@ import {
   Button,
   Typography,
   Alert,
+  Box,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Layout from "../Components/Layout/Layout";
+
 
 const LoginScreen = () => {
-  const {login} = useAuth();
+  const { login } = useAuth();
+  // const userProfie = useProfile()
   const [error, setError] = React.useState();
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
@@ -35,11 +39,17 @@ const LoginScreen = () => {
     try {
       setError("");
       setLoading(true);
-      const user = await login(
-        emailRef.current.value,
-        pwRef.current.value
-      );
-      navigate("/ownerHome");
+
+      // 1) Login and 2) setProfile in Auth Context
+      const {user, userProfile} = await login(emailRef.current.value, pwRef.current.value);
+
+      //Navigate based on user role
+      if (userProfile["isOwner"] === true) {
+        navigate("/owner/");
+      } else {
+        navigate("/pro/");
+      }
+
     } catch (error) {
       setError(error.message);
       setLoading(false);
@@ -47,8 +57,14 @@ const LoginScreen = () => {
     setLoading(false);
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      submitLogin(e);
+    }
+  };
+
   return (
-    <>
+    <Layout>
       <Container maxWidth="xs">
         <Grid container direction="column">
           <Button
@@ -71,35 +87,39 @@ const LoginScreen = () => {
           >
             Log-in
           </Typography>
-          <TextField
-            label="Email"
-            type="email"
-            id="email_login"
-            variant="standard"
-            fullWidth
-            sx={{ my: 1 }}
-            inputRef={emailRef}
-          />
-          <TextField
-            label="Password"
-            type="password"
-            id="pw_login"
-            variant="standard"
-            fullWidth
-            sx={{ my: 1 }}
-            inputRef={pwRef}
-          />
-          <Button
-            fullWidth
-            variant="contained"
-            onClick={submitLogin}
-            sx={{ mt: 3, mb: 1 }}
-          >
-            Log-in
-          </Button>
-          <Button fullWidth onClick={handleReset} sx={{ mb: 3 }}>
-            Reset
-          </Button>
+          <Box component="form">
+            <TextField
+              label="Email"
+              type="email"
+              id="email_login"
+              variant="standard"
+              fullWidth
+              sx={{ my: 1 }}
+              inputRef={emailRef}
+              onKeyDown={handleKeyDown}
+            />
+            <TextField
+              label="Password"
+              type="password"
+              id="pw_login"
+              variant="standard"
+              fullWidth
+              sx={{ my: 1 }}
+              inputRef={pwRef}
+              onKeyDown={handleKeyDown}
+            />
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={submitLogin}
+              sx={{ mt: 3, mb: 1 }}
+            >
+              Log-in
+            </Button>
+            <Button fullWidth onClick={handleReset} sx={{ mb: 3 }}>
+              Reset
+            </Button>
+          </Box>
           {error && <Alert type="error">{error}</Alert>}
         </Grid>
         <Grid container direction="row" sx={{ my: 4 }} alignItems="center">
@@ -111,7 +131,7 @@ const LoginScreen = () => {
           </Button>
         </Grid>
       </Container>
-    </>
+    </Layout>
   );
 };
 
