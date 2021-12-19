@@ -6,8 +6,7 @@ import { useAuth } from "../Context/AuthContext";
 
 const image = ropesImg;
 const HomeScreen = () => {
-  const { userProfile, auth } = useAuth();
-
+  const { userProfile } = useAuth();
   return (
     <Grid sx={{ backgroundColor: "black", minHeight: "calc(100vh - 69px)" }}>
       <HeroSection
@@ -16,16 +15,14 @@ const HomeScreen = () => {
         imgAlt="skdjfksdfksjd"
         title="Hi Rich!!!"
         subtitle="Connecting Pro's and Owners"
-        btnText={"Sign-up"}
-        btnLink='/login'
-        // btnText={ userProfile['firstName'] ? "Continue to Home" : "Sign-up"}
-        // btnLink={
-        //   userProfile["isOwner"] === true
-        //     ? "/owner/"
-        //     : userProfile["isPro"] === true
-        //     ? "/pro/"
-        //     : "/signup"
-        // }
+        btnText={userProfile === null ? "Sign-up" : "Continue to Home"}
+        btnLink={
+          userProfile === null
+            ? "/signup"
+            : userProfile["isOwner"] == true
+            ? "/owner/"
+            : "/pro/"
+        }
       />
     </Grid>
   );

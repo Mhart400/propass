@@ -47,7 +47,9 @@ export function AuthProvider({ children }) {
   }
 
   function logout() {
+    setUserProfile(null)
     return signOut(auth);
+
   }
   
 
