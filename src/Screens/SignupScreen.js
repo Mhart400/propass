@@ -104,9 +104,9 @@ const SignupScreen = () => {
 
       //Navigate to Home Screen Based on Role
       if (userProfile["isOwner"] === true) {
-        navigate("/owner/");
+        navigate("/owner/dashboard");
       } else {
-        navigate("/pro/");
+        navigate("/pro/dashboard");
       }
 
     } catch (error) {

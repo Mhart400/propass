@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Grid } from "@mui/material";
 import HeroSection from "../Components/HeroSection";
 import ropesImg from "../Images/ropes.jpeg";
@@ -24,13 +24,13 @@ const HomeScreen = () => {
         imgAlt="skdjfksdfksjd"
         title="Hi Rich!!"
         subtitle="Connecting Pro's and Owners"
-        btnText={auth.currentUser === null ? "Sign-up" : "Continue to Home"}
+        btnText={auth.currentUser === null ? "Sign-up" : "Continue to Dashboard"}
         btnLink={
           userProfile === null | userProfile === undefined
           ? 'signup'
           : userProfile['isOwner'] === true
-          ? '/owner'
-          : '/pro'
+          ? '/owner/dashboard'
+          : '/pro/dashboard'
         }
       />
     </Grid>

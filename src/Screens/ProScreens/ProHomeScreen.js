@@ -17,8 +17,6 @@ function ProHomeScreen() {
     <Layout>
       <Container maxWidth="md">
         <Grid container direction="column">
-          <Typography>You are logged in as a Pro!!!</Typography>
-          <p>{`Hello ${userProfile['firstName']} ${userProfile['lastName']}!`}</p>
           <Button
             component={Link}
             to="/"
@@ -28,7 +26,12 @@ function ProHomeScreen() {
           >
             Back to Home
           </Button>
+          <Typography>You are logged in as a Pro!!!</Typography>
+          <p>{`Hello ${userProfile['firstName']} ${userProfile['lastName']}!`}</p>
           <Button
+            sx={{width: '150px'}}
+            variant='outlined'
+            size='small'
             onClick={() => {
               logout();
               navigate("/");

@@ -45,9 +45,9 @@ const LoginScreen = () => {
 
       //Navigate based on user role
       if (userProfile["isOwner"] === true) {
-        navigate("/owner/");
+        navigate("/owner/dashboard");
       } else {
-        navigate("/pro/");
+        navigate("/pro/dashboard");
       }
 
     } catch (error) {

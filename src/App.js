@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HeaderMain from "./Components/HeaderMain";
+import HeaderMain from "./Components/Header_Footer/HeaderMain";
 import HomeScreen from "./Screens/HomeScreen";
 import SignupScreen from "./Screens/SignupScreen";
 import LoginScreen from "./Screens/LoginScreen";
@@ -31,10 +31,10 @@ function App() {
             <Route path="/signup" element={<SignupScreen />} />
             <Route path="/login" element={<LoginScreen />} />
             <Route element={<OwnerRoute />}>
-              <Route exact path="/owner" element={<OwnerHomeScreen />} />
+              <Route exact path="/owner/dashboard" element={<OwnerHomeScreen />} />
             </Route>
             <Route path="/pro" element={<ProRoute />}>
-              <Route exact path="/pro/" element={<ProHomeScreen />} />
+              <Route exact path="/pro/dashboard" element={<ProHomeScreen />} />
             </Route>
           </Routes>
         </div>
