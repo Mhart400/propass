@@ -1,12 +1,15 @@
 import { Container, Grid, Typography, Button } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../Context/AuthContext";
+import { useAuth, AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../Components/Layout/Layout";
 
+
 function ProHomeScreen() {
   const { logout, userProfile } = useAuth();
+  const x = useContext(AuthContext)
+  console.log(x)
 
   const navigate = useNavigate();
 

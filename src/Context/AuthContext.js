@@ -8,7 +8,7 @@ import {
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db, auth } from "../firebase-config";
 
-const AuthContext = React.createContext();
+export const AuthContext = React.createContext();
 
 export function useAuth() {
   return useContext(AuthContext);
