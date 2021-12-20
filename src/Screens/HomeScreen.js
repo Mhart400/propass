@@ -10,7 +10,8 @@ const HomeScreen = () => {
   console.log(auth);
 
   // if userProfile is null but auth still exists, then logout() to get them in sync
-  if (userProfile === null && auth.currentUser !== null) {
+  if ((userProfile === null | userProfile === undefined) && auth.currentUser !== null) {
+    console.log('logging out')
     logout()
   }
 
@@ -21,11 +22,11 @@ const HomeScreen = () => {
         height="700px"
         imgSrc={image}
         imgAlt="skdjfksdfksjd"
-        title="Hi Rich!!!"
+        title="Hi Rich!!"
         subtitle="Connecting Pro's and Owners"
         btnText={auth.currentUser === null ? "Sign-up" : "Continue to Home"}
         btnLink={
-          auth.currentUser === null
+          userProfile === null | userProfile === undefined
           ? 'signup'
           : userProfile['isOwner'] === true
           ? '/owner'
