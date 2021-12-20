@@ -25,7 +25,7 @@ const HomeScreen = () => {
         subtitle="Connecting Pro's and Owners"
         btnText={auth.currentUser === null ? "Sign-up" : "Continue to Home"}
         btnLink={
-          userProfile === null 
+          auth.currentUser === null
           ? 'signup'
           : userProfile['isOwner'] === true
           ? '/owner'
