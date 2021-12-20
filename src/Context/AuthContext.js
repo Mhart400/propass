@@ -19,12 +19,12 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [userProfile, setUserProfile] = useState();
   
-  
   function signup(email, password) {
+    //return a user object
     return createUserWithEmailAndPassword(auth, email, password);
   }
 
-  //Before navigating to page aftr login, call getProfile to save profile to state
+  //Before navigating to a page after login, save profile to state
   async function getProfile(email) {
     try {
       const usersRef = collection(db, "Users");
@@ -48,11 +48,10 @@ export function AuthProvider({ children }) {
     return {user, userProfile}
   }
 
-  function logout() {
+  async function logout() {
+    const noAuth = await signOut(auth)
     setUserProfile()
-    return signOut(auth);
-    
-
+    return noAuth
   }
   
 
@@ -60,7 +59,16 @@ export function AuthProvider({ children }) {
     // When user logs into another account or signs out
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      setUserProfile(user.user.email)
+      console.log('UseEffect --> "user" now set as currentUser')
+      console.log(user)
+      
+      if (user === null) {
+        setUserProfile()
+      } else if ('email' in user) {
+        setUserProfile(user.email)
+      } else {
+        setUserProfile()
+      }
     });
     return unsubscribe
   }, []);

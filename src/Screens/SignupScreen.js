@@ -14,6 +14,8 @@ import states from "../Data/states";
 import { useAuth } from "../Context/AuthContext";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore"; 
 import { db } from "../firebase-config";
+import Layout from "../Components/Layout/Layout";
+import PageLoading from "../Components/PageLoading";
 
 const roles = [
   { value: "Pro", label: "Pro" },
@@ -116,10 +118,8 @@ const SignupScreen = () => {
     setLoading(false);
   }
 
-  //Return the HTML
-  return (
-    <>
-      <Container maxWidth="sm">
+  const output = (
+<Container maxWidth="sm">
         <Grid direction="column" container>
           <Button
             component={Link}
@@ -330,7 +330,16 @@ const SignupScreen = () => {
           </Box>
         </Grid>
       </Container>
-    </>
+  )
+
+  
+  return (
+    <>
+    {loading && <PageLoading/>}
+    <Layout>
+      {output}
+    </Layout>
+    </>  
   );
 };
 export default SignupScreen;

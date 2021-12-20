@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Layout from "../Components/Layout/Layout";
-
+import PageLoading from "../Components/PageLoading";
 
 const LoginScreen = () => {
   const { login } = useAuth();
@@ -41,7 +41,10 @@ const LoginScreen = () => {
       setLoading(true);
 
       // 1) Login and 2) setProfile in Auth Context
-      const {user, userProfile} = await login(emailRef.current.value, pwRef.current.value);
+      const { user, userProfile } = await login(
+        emailRef.current.value,
+        pwRef.current.value
+      );
 
       //Navigate based on user role
       if (userProfile["isOwner"] === true) {
@@ -49,7 +52,6 @@ const LoginScreen = () => {
       } else {
         navigate("/pro/dashboard");
       }
-
     } catch (error) {
       setError(error.message);
       setLoading(false);
@@ -63,75 +65,82 @@ const LoginScreen = () => {
     }
   };
 
-  return (
-    <Layout>
-      <Container maxWidth="xs">
-        <Grid container direction="column">
+  const output = (
+    <Container maxWidth="xs">
+      <Grid container direction="column">
+        <Button
+          component={Link}
+          to="/"
+          sx={{ ml: 0, my: 2 }}
+          variant="outlined"
+          size="small"
+        >
+          Back to Home
+        </Button>
+        <Typography
+          align="center"
+          sx={{
+            color: "primary.dark",
+            fontWeight: 400,
+            my: 4,
+            typography: { xs: "h4", sm: "h3", md: "h3", lg: "h2" },
+          }}
+        >
+          Log-in
+        </Typography>
+        <Box component="form">
+          <TextField
+            label="Email"
+            type="email"
+            id="email_login"
+            variant="standard"
+            fullWidth
+            sx={{ my: 1 }}
+            inputRef={emailRef}
+            onKeyDown={handleKeyDown}
+          />
+          <TextField
+            label="Password"
+            type="password"
+            id="pw_login"
+            variant="standard"
+            fullWidth
+            sx={{ my: 1 }}
+            inputRef={pwRef}
+            onKeyDown={handleKeyDown}
+          />
           <Button
-            component={Link}
-            to="/"
-            sx={{ ml: 0, my: 2 }}
-            variant="outlined"
-            size="small"
-          >
-            Back to Home
-          </Button>
-          <Typography
-            align="center"
-            sx={{
-              color: "primary.dark",
-              fontWeight: 400,
-              my: 4,
-              typography: { xs: "h4", sm: "h3", md: "h3", lg: "h2" },
-            }}
+            fullWidth
+            variant="contained"
+            onClick={submitLogin}
+            sx={{ mt: 3, mb: 1 }}
           >
             Log-in
-          </Typography>
-          <Box component="form">
-            <TextField
-              label="Email"
-              type="email"
-              id="email_login"
-              variant="standard"
-              fullWidth
-              sx={{ my: 1 }}
-              inputRef={emailRef}
-              onKeyDown={handleKeyDown}
-            />
-            <TextField
-              label="Password"
-              type="password"
-              id="pw_login"
-              variant="standard"
-              fullWidth
-              sx={{ my: 1 }}
-              inputRef={pwRef}
-              onKeyDown={handleKeyDown}
-            />
-            <Button
-              fullWidth
-              variant="contained"
-              onClick={submitLogin}
-              sx={{ mt: 3, mb: 1 }}
-            >
-              Log-in
-            </Button>
-            <Button fullWidth onClick={handleReset} sx={{ mb: 3 }}>
-              Reset
-            </Button>
-          </Box>
-          {error && <Alert type="error">{error}</Alert>}
-        </Grid>
-        <Grid container direction="row" sx={{ my: 4 }} alignItems="center">
-          <Typography display="inline" sx={{ mr: 1 }}>
-            Don't have an Account?
-          </Typography>
-          <Button color="primary" size="small" component={Link} to="/signup">
-            Sign-up
           </Button>
-        </Grid>
-      </Container>
+          <Button fullWidth onClick={handleReset} sx={{ mb: 3 }}>
+            Reset
+          </Button>
+        </Box>
+        {error && <Alert type="error">{error}</Alert>}
+      </Grid>
+      <Grid container direction="row" sx={{ my: 4 }} alignItems="center">
+        <Typography display="inline" sx={{ mr: 1 }}>
+          Don't have an Account?
+        </Typography>
+        <Button color="primary" size="small" component={Link} to="/signup">
+          Sign-up
+        </Button>
+      </Grid>
+    </Container>
+  );
+
+  return (
+    <>
+    {loading && <PageLoading/>}
+    <Layout>
+      {output}
     </Layout>
+    </>  
   );
 };
 

@@ -11,6 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import CustomLink from "./CustomLink";
 import { useAuth } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -29,7 +30,7 @@ const pages = {
     { pageName: "Bookings", pageLink: "/pro/bookings" },
   ],
 };
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Logout"];
 
 const HeaderMain = () => {
   //AUTH & required variables
@@ -37,7 +38,9 @@ const HeaderMain = () => {
 
   let userRole = "none";
   try {
-    if (userProfile["isOwner"] === true) {
+    if (userProfile === null | userProfile === undefined) {
+      userRole = "none";
+    } else if (userProfile["isOwner"] && userProfile["isOwner"] === true) {
       userRole = "owner";
     } else {
       userRole = "pro";
@@ -144,16 +147,16 @@ const HeaderMain = () => {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {userProfile &&
               pages[userRole].map((page) => (
-                <Button
+                <Box sx={{marginX: '10px'}}>
+                  <CustomLink
                   key={page.pageName}
-                  onClick={() => {
-                    handleCloseNavMenu();
-                    navigate(page.pageLink);
-                  }}
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  to={page.pageLink}
+                  activeStyle={{color: 'white', fontWeight: 'bold', textDecoration: 'none'}}
+                  inactiveStyle={{color: 'white', textDecoration: 'none' }}
                 >
                   {page.pageName}
-                </Button>
+                </CustomLink>
+                </Box>
               ))}
           </Box>
 

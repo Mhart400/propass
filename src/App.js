@@ -9,7 +9,8 @@ import { AuthProvider } from "./Context/AuthContext";
 import OwnerHomeScreen from "./Screens/OwnerScreens/OwnerHomeScreen";
 import OwnerRoute from "./Route/OwnerRoute";
 import ProRoute from "./Route/ProRoute";
-import ProHomeScreen from "./Screens/ProScreens/ProHomeScreen";
+import ProDashboardScreen from "./Screens/ProScreens/ProDashboardScreen";
+import ProProfileScreen from './Screens/ProScreens/ProProfileScreen'
 
 function App() {
   return (
@@ -34,7 +35,8 @@ function App() {
               <Route exact path="/owner/dashboard" element={<OwnerHomeScreen />} />
             </Route>
             <Route path="/pro" element={<ProRoute />}>
-              <Route exact path="/pro/dashboard" element={<ProHomeScreen />} />
+              <Route exact path="/pro/dashboard" element={<ProDashboardScreen />} />
+              <Route exact path="/pro/profile" element={<ProProfileScreen />} />
             </Route>
           </Routes>
         </div>
