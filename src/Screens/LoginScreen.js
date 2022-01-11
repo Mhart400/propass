@@ -13,6 +13,7 @@ import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Layout from "../Components/Layout/Layout";
 import PageLoading from "../Components/PageLoading";
+import PageTitle from "../Components/Layout/PageTitle";
 
 const LoginScreen = () => {
   const { login } = useAuth();
@@ -77,21 +78,12 @@ const LoginScreen = () => {
         >
           Back to Home
         </Button>
-        <Typography
-          align="center"
-          sx={{
-            color: "primary.dark",
-            fontWeight: 400,
-            my: 4,
-            typography: { xs: "h4", sm: "h3", md: "h3", lg: "h2" },
-          }}
-        >
-          Log-in
-        </Typography>
+        <PageTitle>Login</PageTitle>
         <Box component="form">
           <TextField
             label="Email"
             type="email"
+            autoComplete="username"
             id="email_login"
             variant="standard"
             fullWidth
@@ -102,6 +94,7 @@ const LoginScreen = () => {
           <TextField
             label="Password"
             type="password"
+            autoComplete="current-password"
             id="pw_login"
             variant="standard"
             fullWidth

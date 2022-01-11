@@ -1,16 +1,16 @@
 import React from "react";
 import Layout from "../../Components/Layout/Layout";
+import { Box } from "@mui/material";
+import ProProfileTabs from "../../Components/userProfile/ProProfileTabs";
+
 
 function ProProfileScreen() {
   return (
     <Layout>
-      <p>This page will contain:</p>
-      <ul>
-        <li>Set your profile picture</li>
-        <li>Update your information</li>
-        <li>List your qualifications & specialties</li>
-        <li>Payment details (Stripe credentials)</li>
-      </ul>
+      {/* <PageTitle>My Profile</PageTitle> */}
+      <Box sx={{width: '100%'}}>
+          <ProProfileTabs/>
+      </Box>
     </Layout>
   );
 }

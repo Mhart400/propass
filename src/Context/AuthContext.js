@@ -8,7 +8,6 @@ import {
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db, auth } from "../firebase-config";
 
-
 export const AuthContext = React.createContext();
 
 export function useAuth() {
@@ -18,13 +17,14 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [userProfile, setUserProfile] = useState();
-  
+  const [userId, setUserId] = useState();
+
   function signup(email, password) {
     //return a user object
     return createUserWithEmailAndPassword(auth, email, password);
   }
 
-  //Before navigating to a page after login, save profile to state
+  //Before navigating to a page after login, save profile to state, 
   async function getProfile(email) {
     try {
       const usersRef = collection(db, "Users");
@@ -32,48 +32,59 @@ export function AuthProvider({ children }) {
       const results = await getDocs(q);
       let profile = [];
       results.forEach((doc) => {
-        profile.push(doc.data());
+        profile.push({...doc.data(), id: doc.id});
       });
+      console.log(profile)
       setUserProfile(profile[0])
-      return profile[0]
+      return profile[0];
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
-  
+
   async function login(email, password) {
     const user = await signInWithEmailAndPassword(auth, email, password);
-    const userProfile = await getProfile(email)
-    setUserProfile(userProfile)
-    return {user, userProfile}
+    const userProfile = await getProfile(email);
+    return { user, userProfile };
   }
 
   async function logout() {
-    const noAuth = await signOut(auth)
-    setUserProfile()
-    return noAuth
+    const noAuth = await signOut(auth);
+    setUserProfile();
+    return noAuth;
   }
-  
 
-  useEffect( () => {
+
+  useEffect(() => {
     // When user logs into another account or signs out
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      console.log('UseEffect --> "user" now set as currentUser')
-      console.log(user)
-      
+      console.log('UseEffect --> "user" now set as currentUser');
+      console.log(user);
+
       if (user === null) {
-        setUserProfile()
-      } else if ('email' in user) {
-        setUserProfile(user.email)
+        setUserProfile();
+      } else if ("email" in user) {
+        getProfile(user.email);
+        
+        //set the avatar?
+
       } else {
-        setUserProfile()
+        setUserProfile();
       }
     });
-    return unsubscribe
+    return unsubscribe;
   }, []);
 
-  const value = { auth, currentUser, signup, login, logout, getProfile, userProfile};
+  const value = {
+    auth,
+    currentUser,
+    signup,
+    login,
+    logout,
+    getProfile,
+    userProfile,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -1,14 +1,16 @@
 import React from "react";
-import { Container, Box } from "@mui/material";
+import { Container, Box, Paper } from "@mui/material";
 
 function Layout({ children }) {
   return (
-    <Box sx={{padding: '10px', backgroundColor: '#F7F7F7', minHeight: '90vh'}}>
-      <Container maxWidth="xl" sx={{padding: '10px', backgroundColor: 'white'}}>
+    <Box sx={{padding: '10px', backgroundColor: 'background.default', minHeight: '500px'}}>
+      <Container maxWidth="xl" sx={{padding: '10px', backgroundColor: 'background.default'}}>
+        <Paper>
         <Container maxWidth='lg'>
           {children}
-          </Container>
-          </Container>
+        </Container>
+        </Paper>
+      </Container>
     </Box>
   );
 }

@@ -12,10 +12,11 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import states from "../Data/states";
 import { useAuth } from "../Context/AuthContext";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore"; 
+import { collection, addDoc, updateDoc, serverTimestamp, doc } from "firebase/firestore"; 
 import { db } from "../firebase-config";
 import Layout from "../Components/Layout/Layout";
 import PageLoading from "../Components/PageLoading";
+import PageTitle from "../Components/Layout/PageTitle";
 
 const roles = [
   { value: "Pro", label: "Pro" },
@@ -92,7 +93,7 @@ const SignupScreen = () => {
       
 
       // Add User data to Firestore
-      addDoc(collection(db, "Users"), {
+      const docRef = await addDoc(collection(db, "Users"), {
         firstName: firstNameRef.current.value,
         lastName: lastNameRef.current.value,
         email: user.user.email,
@@ -100,6 +101,10 @@ const SignupScreen = () => {
         isPro: roleRef.current.value === 'Pro' ? true : false,
         timestamp: serverTimestamp()
       });
+
+      //Update with userId
+      await updateDoc(doc(db, "Users", docRef.id), {id: docRef.id})
+
 
       // Set User Profile in Auth Context
       const userProfile = await getProfile(user.user.email)
@@ -130,17 +135,7 @@ const SignupScreen = () => {
           >
             Back to Home
           </Button>
-          <Typography
-            align="center"
-            sx={{
-              color: "primary.dark",
-              fontWeight: 400,
-              my: 4,
-              typography: { xs: "h4", sm: "h3", md: "h3", lg: "h2" },
-            }}
-          >
-            Sign-up
-          </Typography>
+          <PageTitle>Sign-up</PageTitle>
 
           <Box component="form" noValidate autoComplete="off">
             <Grid container direction="column">

@@ -5,7 +5,7 @@ const PageLoading = () => {
   return (
     <Box
       sx={{
-        zIndex: 10,
+        zIndex: 15,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -16,7 +16,7 @@ const PageLoading = () => {
         position: 'absolute'
       }}
     >
-      <CircularProgress size={120} thickness={6} sx={{position: 'absolute', top: '150px'}} />
+      <CircularProgress size={120} thickness={6} sx={{position: 'absolute'}} />
     </Box>
   );
 };

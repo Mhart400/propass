@@ -9,7 +9,7 @@ import PageTitle from "../../Components/Layout/PageTitle";
 import CardBox from "../../Components/Layout/CardBox";
 import Slider from "../../Components/Slider/Slider";
 
-function ProDashboardScreen() {
+function OwnerDashboardScreen() {
   const { logout, userProfile } = useAuth();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -23,12 +23,12 @@ function ProDashboardScreen() {
 
   const output = (
     <Grid container direction="column">
-      <PageTitle>My Dashboard</PageTitle>
-      <Slider slides={images} />
+      <PageTitle>Owner Dashboard</PageTitle>
       
       
       
-      <Box sx={{ my: 9, p: 2}}>
+      
+      <Box sx={{ my: 6, p: 2}}>
         <Typography gutterBottom variant="h5" align='center' >
           Pros on ProPass
         </Typography>
@@ -36,7 +36,7 @@ function ProDashboardScreen() {
         <CardBox role="pro" />
       </Box>
       
-      <Box sx={{ my: 9, p: 2}}>
+      <Box sx={{ my: 6, p: 2}}>
         <Typography gutterBottom variant="h5" align='center' >
           Studios near me
         </Typography>
@@ -44,6 +44,7 @@ function ProDashboardScreen() {
         <CardBox role="owner" />
       </Box>
 
+      <Slider slides={images} />
       <Typography>This page will contain:</Typography>
       <ul>
         <li>List of Upcoming Bookings</li>
@@ -59,5 +60,4 @@ function ProDashboardScreen() {
     </Layout>
   );
 }
-
-export default ProDashboardScreen;
+export default OwnerDashboardScreen;

@@ -7,13 +7,18 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import CustomLink from "./CustomLink";
 import { useAuth } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import UserAvatar from "../userProfile/UserAvatar";
+import { ToggleDarkMode } from "../ToggleDarkMode";
+import logoLight from '../../Images/logo_white copy.png'
+import logoDark from '../../Images/logo_dark.png'
+import { useTheme } from "@mui/material/styles";
+
 
 const pages = {
   none: [],
@@ -30,12 +35,12 @@ const pages = {
     { pageName: "Bookings", pageLink: "/pro/bookings" },
   ],
 };
-const settings = ["Logout"];
+const settings = [<ToggleDarkMode/>, "Logout"];
 
 const HeaderMain = () => {
   //AUTH & required variables
   const { currentUser, logout, userProfile } = useAuth();
-
+  const theme = useTheme()
   let userRole = "none";
   try {
     if (userProfile === null | userProfile === undefined) {
@@ -70,22 +75,14 @@ const HeaderMain = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ width: "100%" }}>
+    <AppBar position="static" sx={{ width: "100%", backgroundColor: 'background.paper', color: 'header.primary' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              cursor: "pointer",
-            }}
+          <Box component='img' src={theme.palette.mode === 'light' ? logoLight : logoDark}
+          sx={{height: '60px'}}
             onClick={() => navigate("/")}
-          >
-            ProPass
-          </Typography>
+
+          />
           {/* // Hamburger Menu and Menu Links */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             {currentUser && (
@@ -136,23 +133,17 @@ const HeaderMain = () => {
               </Box>
             )}
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            ProPass
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }}}>
             {userProfile &&
               pages[userRole].map((page) => (
                 <Box sx={{marginX: '10px'}}>
                   <CustomLink
                   key={page.pageName}
                   to={page.pageLink}
-                  activeStyle={{color: 'white', fontWeight: 'bold', textDecoration: 'none'}}
-                  inactiveStyle={{color: 'white', textDecoration: 'none' }}
+                  activeStyle={{ fontWeight: 'bold', textDecoration: 'none'}}
+                  inactiveStyle={{ textDecoration: 'none' }}
+                  
                 >
                   {page.pageName}
                 </CustomLink>
@@ -160,11 +151,11 @@ const HeaderMain = () => {
               ))}
           </Box>
 
-          {currentUser && (
+          {userProfile && (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <UserAvatar />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -204,7 +195,7 @@ const HeaderMain = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Button
                 variant="outlined"
-                sx={{ color: "white", outline: "1px solid white" }}
+                sx={{ color: "primary", outline: "1px solid white" }}
                 onClick={() => navigate("/login")}
               >
                 Login
