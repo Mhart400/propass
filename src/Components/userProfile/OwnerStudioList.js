@@ -26,7 +26,7 @@ function OwnerStudioList() {
   });
   const [displayAddNewGymModal, setDisplayAddNewGymModal] = useState(false);
   const [studioList, setStudioList] = useState();
-  const { retrieveAllStudios } = useFirestore();
+  const { retrieveAllMyStudios } = useFirestore();
 
   const editValues = () => {
     editing ? setEditing(false) : setEditing(true);
@@ -79,7 +79,7 @@ function OwnerStudioList() {
   ];
 
   useEffect(() => {
-      retrieveAllStudios(setStudioList)
+      retrieveAllMyStudios(setStudioList)
   }, [displayModal]);
 
   return (

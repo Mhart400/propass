@@ -260,10 +260,25 @@ function useFirestore() {
 
 
   async function retrieveAllStudios(setterFunction) {
-    // Returns a list of Studios
+    // Returns a list of ALL Studios
     // Everytime there is snapshot, use setterFunction to update state in component
     console.log(`Getting list of all studios`);
     const q = query(collection(db, "Studios"));
+    onSnapshot(q, (snap) => {
+      let documents = [];
+      snap.forEach((doc) => {
+        documents.push(doc.data());
+      });
+      setterFunction(documents);
+    });
+  }
+  
+  
+  async function retrieveAllMyStudios(setterFunction) {
+    // Returns a list of Studios for the user
+    // Everytime there is snapshot, use setterFunction to update state in component
+    console.log(`Getting list of all studios`);
+    const q = query(collection(db, "Studios"), where('ownerId', '==', userProfile.id));
     onSnapshot(q, (snap) => {
       let documents = [];
       snap.forEach((doc) => {
@@ -309,6 +324,7 @@ function useFirestore() {
     updateStudioData_addToArray,
     retrieveStudioData_allNested,
     retrieveAllStudios,
+    retrieveAllMyStudios,
     retrieveStudioDocs,
   };
 }

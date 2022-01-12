@@ -1,6 +1,6 @@
 import { Grid, Typography, Box, Divider } from "@mui/material";
 import React, { useState } from "react";
-
+import StudioList from "../../Components/Layout/StudioList";
 import { useAuth } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../Components/Layout/Layout";
@@ -41,7 +41,7 @@ function OwnerDashboardScreen() {
           Studios near me
         </Typography>
         <Divider />
-        <CardBox role="owner" />
+        <StudioList />
       </Box>
 
       <Slider slides={images} />
