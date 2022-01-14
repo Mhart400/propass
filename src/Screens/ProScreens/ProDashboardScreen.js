@@ -8,6 +8,7 @@ import PageLoading from "../../Components/PageLoading";
 import PageTitle from "../../Components/Layout/PageTitle";
 import CardBox from "../../Components/Layout/CardBox";
 import Slider from "../../Components/Slider/Slider";
+import StudioList from '../../Components/Layout/StudioList'
 
 function ProDashboardScreen() {
   const { logout, userProfile } = useAuth();
@@ -22,13 +23,21 @@ function ProDashboardScreen() {
   ];
 
   const output = (
-    <Grid container direction="column">
+    <Grid container direction="column" sx={{width: '100%', overflow: 'hidden'}} >
       <PageTitle>My Dashboard</PageTitle>
-      <Slider slides={images} />
       
       
+
+      <Box sx={{ my: 2, p: 2, width: '100%', }}>
+        <Typography gutterBottom variant="h5" align='center' >
+          Studios near me
+        </Typography>
+        <Divider  />
+        <StudioList />
+      </Box>
       
-      <Box sx={{ my: 9, p: 2}}>
+      
+      <Box sx={{ my: 2, p: 2, width: '100%'}}>
         <Typography gutterBottom variant="h5" align='center' >
           Pros on ProPass
         </Typography>
@@ -36,24 +45,18 @@ function ProDashboardScreen() {
         <CardBox role="pro" />
       </Box>
       
-      <Box sx={{ my: 9, p: 2}}>
-        <Typography gutterBottom variant="h5" align='center' >
-          Studios near me
-        </Typography>
-        <Divider />
-        <CardBox role="owner" />
-      </Box>
 
       <Typography>This page will contain:</Typography>
       <ul>
         <li>List of Upcoming Bookings</li>
         <li>Gyms near me (click on gym to make a booking)</li>
+        <Slider slides={images} />
       </ul>
     </Grid>
   );
 
   return (
-    <Layout>
+    <Layout >
       {loading && <PageLoading />}
       {output}
     </Layout>

@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, Chip, Grid, Rating, Box } from "@mui/material";
-
+import { Link } from 'react-router-dom'
 
 export default function StudioCard({ studioInfo }) {
     
@@ -12,14 +12,15 @@ export default function StudioCard({ studioInfo }) {
     <Card
       sx={{
         display: "inline-flex",
+        
         m: 1,
         mb: 3,
-        width: { lg: "30%", md: "30%", sm: "45%", xs: "100%" },
+        width: { lg: "30%", md: "30%", sm: "40%", xs: "90%" },
         minWidth: "280px",
         alignSelf: "inherit",
       }}
     >
-      <CardActionArea>
+      <CardActionArea component={Link} to={`/studioDetail/${studioInfo.id}`}>
         <CardMedia
           component="img"
           height="160"

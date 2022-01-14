@@ -13,7 +13,7 @@ function StudioList() {
   }, []);
 
   return (
-    <Box sx={{ width: "100%", my: 3 }}>
+    <Box sx={{ width: "100%", my: 3, }}>
       <Grid
         direction="row"
         display="flex"

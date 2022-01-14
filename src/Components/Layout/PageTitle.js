@@ -10,6 +10,7 @@ function PageTitle({children}) {
         fontWeight: 'bold',
         my: 2,
         typography: { xs: "h4", sm: "h3", md: "h3", lg: "h2" },
+        width: '100%'
       }}
     >
       {children}

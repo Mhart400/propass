@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useAuth } from "../../Context/AuthContext";
 import useFirestore from "../../hooks/useFirestore";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import PageLoading from "../../Components/PageLoading";
 import Layout from "../../Components/Layout/Layout";

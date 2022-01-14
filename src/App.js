@@ -16,6 +16,7 @@ import FooterMain from "./Components/Header_Footer/FooterMain";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { ColorModeContext, getDesignTokens } from "./Context/ThemeContext";
 import ProDetailScreen from "./Screens/ProScreens/ProDetailScreen";
+import StudioDetailScreen from "./Screens/StudioScreens/StudioDetailScreen";
 
 function App() {
   const [mode, setMode] = React.useState("light");
@@ -76,6 +77,11 @@ function App() {
                   exact
                   path={`/proDetail/:userId`}
                   element={<ProDetailScreen />}
+                />
+                <Route
+                  exact
+                  path={`/studioDetail/:studioId`}
+                  element={<StudioDetailScreen />}
                 />
               </Routes>
               <FooterMain />

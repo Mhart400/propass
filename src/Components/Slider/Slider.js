@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import SliderContent from "./SliderContent";
 import Slide from "./Slide";
 import Arrow from "./Arrow";
 import Dots from "./Dots";
 
-function Slider({ slides }) {
+function Slider({ slides, height, width, objectFit }) {
   const [state, setState] = useState({
     activeIndex: 0,
     translate: 0,
@@ -14,6 +14,7 @@ function Slider({ slides }) {
   const getWidth = () => {
     // return 500;
     return window.innerWidth;
+    
   }
 
   const { translate, transition, activeIndex } = state;
@@ -56,14 +57,17 @@ function Slider({ slides }) {
   console.log('getWidth = ')
   console.log(getWidth())
 
+
+
   return (
     <Box
       sx={{
         position: "relative",
-        height: "500px",
-        width: "100%",
-        margin: "0 auto",
+        height: height ? height : '500px',
+        width: width ? width : "100%",
+        // margin: "0 auto",
         overflow: "hidden",
+        // objectFit: objectFit ? objectFit : 'fill',
       }}
     >
       <SliderContent

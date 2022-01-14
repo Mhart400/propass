@@ -7,9 +7,9 @@ function Slide({content}) {
             height: '100%',
             width: '100%',
             backgroundImage: `url('${content}')`,
-            backgroundSize: 'cover',
+            backgroundSize: 'contain',
             backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
+            backgroundPosition: 'lelt',
         }}>
             
         </Box>
