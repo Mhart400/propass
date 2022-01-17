@@ -54,20 +54,15 @@ function Slider({ slides, height, width, objectFit }) {
     });
   };
 
-  console.log('getWidth = ')
-  console.log(getWidth())
-
-
-
   return (
     <Box
       sx={{
         position: "relative",
         height: height ? height : '500px',
-        width: width ? width : "100%",
-        // margin: "0 auto",
+        width: width ? width : "600px",
+        margin: "0 auto",
         overflow: "hidden",
-        // objectFit: objectFit ? objectFit : 'fill',
+        // objectFit: objectFit ? objectFit : 'cover',
       }}
     >
       <SliderContent

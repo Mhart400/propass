@@ -1,5 +1,5 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
+import { AppBar, Badge } from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -12,13 +12,15 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import CustomLink from "./CustomLink";
 import { useAuth } from "../../Context/AuthContext";
+import { useCart } from "../../Context/CartContext";
 import { useNavigate } from "react-router-dom";
 import UserAvatar from "../userProfile/UserAvatar";
 import { ToggleDarkMode } from "../ToggleDarkMode";
-import logoLight from '../../Images/logo_white copy.png'
-import logoDark from '../../Images/logo_dark.png'
+import logoLight from "../../Images/logo_white copy.png";
+import logoDark from "../../Images/logo_dark.png";
 import { useTheme } from "@mui/material/styles";
-
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import CartModal from "../Cart/CartModal";
 
 const pages = {
   none: [],
@@ -35,15 +37,16 @@ const pages = {
     { pageName: "Bookings", pageLink: "/pro/bookings" },
   ],
 };
-const settings = [<ToggleDarkMode/>, "Logout"];
+const settings = [<ToggleDarkMode />, "Logout"];
 
 const HeaderMain = () => {
   //AUTH & required variables
   const { currentUser, logout, userProfile } = useAuth();
-  const theme = useTheme()
+  const { cartItems } = useCart();
+  const theme = useTheme();
   let userRole = "none";
   try {
-    if (userProfile === null | userProfile === undefined) {
+    if ((userProfile === null) | (userProfile === undefined)) {
       userRole = "none";
     } else if (userProfile["isOwner"] && userProfile["isOwner"] === true) {
       userRole = "owner";
@@ -53,8 +56,7 @@ const HeaderMain = () => {
   } catch (error) {
     console.log(error);
   }
-  console.log("currentUser:");
-  console.log(currentUser);
+  
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -74,14 +76,30 @@ const HeaderMain = () => {
     setAnchorElUser(null);
   };
 
+  const [cartModalOpen, setCartModalOpen] = React.useState(false);
+  const openCartModal = () => {
+    setCartModalOpen(true);
+  };
+  const closeCartModal = () => {
+    setCartModalOpen(false);
+  };
+
   return (
-    <AppBar position="static" sx={{ width: "100%", backgroundColor: 'background.paper', color: 'header.primary' }}>
+    <AppBar
+      position="static"
+      sx={{
+        width: "100%",
+        backgroundColor: "background.paper",
+        color: "header.primary",
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box component='img' src={theme.palette.mode === 'light' ? logoLight : logoDark}
-          sx={{height: '60px'}}
+          <Box
+            component="img"
+            src={theme.palette.mode === "light" ? logoLight : logoDark}
+            sx={{ height: "60px" }}
             onClick={() => navigate("/")}
-
           />
           {/* // Hamburger Menu and Menu Links */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -133,66 +151,82 @@ const HeaderMain = () => {
               </Box>
             )}
           </Box>
-          
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }}}>
+
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {userProfile &&
               pages[userRole].map((page) => (
-                <Box sx={{marginX: '10px'}}>
+                <Box sx={{ marginX: "10px" }} key={`${Math.random()}${page.pageName}`}>
                   <CustomLink
-                  key={page.pageName}
-                  to={page.pageLink}
-                  activeStyle={{ fontWeight: 'bold', textDecoration: 'none'}}
-                  inactiveStyle={{ textDecoration: 'none' }}
-                  
-                >
-                  {page.pageName}
-                </CustomLink>
+                    key={page.pageName}
+                    to={page.pageLink}
+                    activeStyle={{ fontWeight: "bold", textDecoration: "none" }}
+                    inactiveStyle={{ textDecoration: "none" }}
+                  >
+                    {page.pageName}
+                  </CustomLink>
                 </Box>
               ))}
           </Box>
 
           {userProfile && (
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <UserAvatar />
+            <>
+              {cartItems && cartItems.length > 0 && (
+                <IconButton onClick={openCartModal} sx={{ mx: 1 }}>
+                  <Badge
+                    badgeContent={cartItems.length}
+                    
+                    sx={{'& .MuiBadge-badge': {fontSize: '12px', color: 'white', backgroundColor: 'secondary.main'}}}
+                    >
+                    <ShoppingCartIcon sx={{ color: "primary.dark" }} />
+                  </Badge>
                 </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem
-                    key={setting}
-                    onClick={() => {
-                      handleCloseNavMenu();
-                      if (setting === "Logout") {
-                        logout();
-                        navigate("/");
-                      }
-                    }}
-                  >
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
+              )}
+              {cartModalOpen && (
+                <CartModal open={cartModalOpen} closeModal={closeCartModal} />
+              )}
+
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <UserAvatar />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem
+                      key={setting}
+                      onClick={() => {
+                        handleCloseNavMenu();
+                        if (setting === "Logout") {
+                          logout();
+                          navigate("/");
+                        }
+                      }}
+                    >
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            </>
           )}
           {!currentUser && (
-            <Box sx={{ flexGrow: 0 }}>
+            <Box >
               <Button
                 variant="outlined"
                 sx={{ color: "primary", outline: "1px solid white" }}

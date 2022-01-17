@@ -12,6 +12,7 @@ import PageLoading from "../PageLoading";
 import useFirestore from "../../hooks/useFirestore";
 import { useAuth } from "../../Context/AuthContext";
 import useStorage_studios from "../../hooks/useStorage_studios";
+import {useSnackbar} from 'notistack'
 
 const steps = ["Name & Address", "Operating Hours", "Photos"];
 
@@ -20,7 +21,7 @@ export default function HorizontalLinearStepper({ closeModal }) {
   const { uploadStudioDoc } = useStorage_studios();
   const { addStudio, deleteStudioDocs, addStudioDoc, saveStudioData_Nested } =
     useFirestore();
-
+  const { enqueueSnackbar, closeSnackbar} = useSnackbar()
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [saveEnabled, setSaveEnabled] = React.useState(false);
@@ -153,7 +154,7 @@ export default function HorizontalLinearStepper({ closeModal }) {
         uploadStudioDoc(newId, "StudioImages", image['file'], false);
     })
 
-    console.log("Save Complete");
+    enqueueSnackbar('New Studio Added', {variant: 'success'})
 
     closeModal();
   }

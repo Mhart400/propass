@@ -25,7 +25,7 @@ function GymModal({ closeModal, studioId, open }) {
 
   useEffect(() => {
     retrieveStudioData_allNested(studioId, setStudioDetails);
-  }, [studioId]);
+  }, [studioId, open]);
 
   return (
     <Modal
@@ -37,7 +37,7 @@ function GymModal({ closeModal, studioId, open }) {
     >
       <Box sx={modalStyle}>
       {studioDetails && (
-        <>
+        <Box key={studioId}>
           <Typography variant="h4" align='center' id="child-modal-title">
             {studioDetails.name}
           </Typography>
@@ -50,7 +50,7 @@ function GymModal({ closeModal, studioId, open }) {
             Close
           </Button>
           </Box>
-        </>
+        </Box>
       )}
       </Box>
     </Modal>

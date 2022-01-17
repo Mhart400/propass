@@ -16,7 +16,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
-  const [userProfile, setUserProfile] = useState();
+  const [userProfile, setUserProfile] = useState(JSON.parse(localStorage.getItem('userProfile')));
   const [userId, setUserId] = useState();
 
   function signup(email, password) {
@@ -34,8 +34,8 @@ export function AuthProvider({ children }) {
       results.forEach((doc) => {
         profile.push({...doc.data(), id: doc.id});
       });
-      console.log(profile)
       setUserProfile(profile[0])
+      localStorage.setItem('userProfile', JSON.stringify(profile[0]))
       return profile[0];
     } catch (error) {
       console.log(error);
@@ -59,16 +59,12 @@ export function AuthProvider({ children }) {
     // When user logs into another account or signs out
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      console.log('UseEffect --> "user" now set as currentUser');
-      console.log(user);
-
+      
       if (user === null) {
+        localStorage.clear()
         setUserProfile();
       } else if ("email" in user) {
         getProfile(user.email);
-        
-        //set the avatar?
-
       } else {
         setUserProfile();
       }

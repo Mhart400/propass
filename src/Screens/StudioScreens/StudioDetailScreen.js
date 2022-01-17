@@ -24,54 +24,61 @@ function StudioDetailScreen() {
       <Button sx={{ my: 1 }} onClick={history.back}>
         Back
       </Button>
-      <Grid
-        container
-        direction="row"
-        sx={{ overflow: "hidden", width: "100%" }}
-      >
+      {studioInfo && (
         <Grid
-          item
-          display="inline-flex"
-          sx={{
-            pr: 1,
-            width: { lg: "70%", md: "60%", sm: "100%", xs: "100%" },
-          }}
+          container
+          direction="row"
+          sx={{ overflow: "hidden", width: "100%" }}
         >
-          {studioInfo && (
-            <Box sx={{ mb: 3, width: "100%" }}>
+          <Grid
+          // Row 1
+            item
+            container
+            columns={20}
+            sx={{
+              mb: 2,
+            }}
+          >
+            <Grid item xs={20} sm={20} md={10} >
               <Typography variant="h4" align="left" gutterBottom>
                 {studioInfo.name}
               </Typography>
 
               <Box sx={{ mr: 3, overflow: "hidden", borderRadius: "15px" }}>
                 <Slider
-                  slides={studioInfo.StudioImages ? [
-                    studioInfo.MainImage.url,
-                    ...studioInfo.StudioImages.map((image) => {
-                      return image.url;
-                    }),
-                  ] : [studioInfo.MainImage.url]}
+                  slides={
+                    studioInfo.StudioImages
+                      ? [
+                        studioInfo.MainImage.url,
+                          ...studioInfo.StudioImages.map((image) => {
+                            return image.url;
+                          }),
+                        ]
+                      : [studioInfo.MainImage.url]
+                  }
                   height="300px"
                   width={"100%"}
                   objectFit="fit"
                 />
               </Box>
 
+            </Grid>
+            <Grid item xs={20} sm={20} md={10} >
               <AboutTheStudio studioInfo={studioInfo} />
-              <AboutTheStudio studioInfo={studioInfo} />
-            </Box>
-          )}
-        </Grid>
-        <Grid
-          item
-          sx={{
-            display: "inline-flex",
-            width: { lg: "30%", md: "40%", sm: "100%", xs: "100%" },
-          }}
-        >
+                  
+            </Grid>
+
+          </Grid>
+          <Grid
+          // Row 2
+            item container 
+            columns={20}
+          >
+            <AboutTheStudio studioInfo={studioInfo} />
+          </Grid>
           {studioInfo && <StudioDetailBooking studioInfo={studioInfo} />}
         </Grid>
-      </Grid>
+      )}
     </Layout>
   );
 }

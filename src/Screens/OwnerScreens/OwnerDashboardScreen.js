@@ -27,6 +27,13 @@ function OwnerDashboardScreen() {
       
       
       
+      <Box sx={{ my: 6, p: 2, width: '100%'}}>
+        <Typography gutterBottom variant="h5" align='center' >
+          Studios near me
+        </Typography>
+        <Divider />
+        <StudioList />
+      </Box>
       
       <Box sx={{ my: 6, p: 2, width: '100%'}}>
         <Typography gutterBottom variant="h5" align='center' >
@@ -36,13 +43,6 @@ function OwnerDashboardScreen() {
         <CardBox role="pro" />
       </Box>
       
-      <Box sx={{ my: 6, p: 2, width: '100%'}}>
-        <Typography gutterBottom variant="h5" align='center' >
-          Studios near me
-        </Typography>
-        <Divider />
-        <StudioList />
-      </Box>
 
       <Slider slides={images} />
       <Typography>This page will contain:</Typography>

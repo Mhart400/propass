@@ -1,9 +1,9 @@
 import React from "react";
-import { Box, Button, Typography, Popper } from "@mui/material";
+import { Box, Button, Typography, Popper, Slide } from "@mui/material";
 import { useParams } from "react-router-dom";
 import StudioBookingPopper from "./StudioBookingPopper";
 
-function StudioDetailBooking({studioInfo}) {
+function StudioDetailBooking({ studioInfo }) {
   const { studioId } = useParams();
 
   // Handle popper behavior
@@ -12,67 +12,109 @@ function StudioDetailBooking({studioInfo}) {
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popper' : undefined;
-
-
+  const id = open ? "simple-popper" : undefined;
 
   return (
     <Box
       sx={{
         p: 3,
         width: "100%",
-        height: "100%",
+        height: "40px",
         borderLeftColor: "text.secondary",
         borderLeftWidth: { md: "1px", sm: 0, xs: 0 },
         borderLeftStyle: "solid",
-        // display: 'flex',
-        
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
       }}
     >
-      <Typography variant="h4" align="center" sx={{width: '100%'}}>
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          zIndex: 0,
+          left: 0,
+          backgroundColor: "primary.dark",
+          opacity: "99%",
+        }}
+      />
+
+      <Typography
+        sx={{
+          mx: { lg: 3, sm: 2, xs: 1 },
+          color: "background.default",
+          zIndex: 1,
+          fontSize: { lg: "20px", xs: "18px" },
+          fontWeight: "bold",
+        }}
+      >
         ${studioInfo.rate}/hour
       </Typography>
-      <Box sx={{ display: "flex", flexDirection: {md: 'column', sm :'row'}, alignItems: "center" }}>
-        <Box
-          sx={{
-            width: { md: "100%", sm: "100%", xs: "50%" },
-            my: 3,
-            mr: 1,
-            display: "inline-flex",
-            justifyContent: "center",
-          }}
-        >
-          <Button
-            variant="contained"
-            align="center"
-            size="large"
-            sx={{ borderRadius: "15px", px: {md: 4, sm: 2}, py: {md: 2, sm: 1}, flexWrap: "nowrap" }}
-            onClick={handleBookingPopper}
-            aria-describedby={id} 
-          >
-            Book Session
-          </Button>
-        </Box>
-        <Popper open={open} anchorEl={anchorEl} id={id} placement='auto-start'>
-          <StudioBookingPopper studioInfo={studioInfo} handleClose={handleBookingPopper} />
-        </Popper>
-        <Box
-          sx={{
-            width: { md: "100%", sm: "100%", xs: "50%" },
-            my: 1,
-            display: "inline-flex",
-            justifyContent: "center",
-          }}
-        >
-          <Button
-            align="center"
-            size="large"
-            onClick={() => console.log(studioId)}
-          >
-            Message Owner
-          </Button>
-        </Box>
-      </Box>
+
+      <Button
+        variant="contained"
+        align="center"
+        size="large"
+        color="secondary"
+        sx={{
+          borderRadius: "15px",
+          px: { lg: 4, md: 4, sm: 2, xs: 1 },
+          mx: { lg: 3, md: 2, sm: 1, xs: 1 },
+          lineHeight: 1.5,
+          width: { sm: "180px", xs: "110px" },
+        }}
+        onClick={handleBookingPopper}
+        aria-describedby={id}
+      >
+        Book Session
+      </Button>
+
+      <Popper
+        open={open}
+        anchorEl={anchorEl}
+        id={id}
+        placement="top"
+        modifiers={[
+          {
+            name: "preventOverflow",
+            enabled: true,
+            options: {
+              altAxis: true,
+              altBoundary: true,
+              // tether: true,
+              rootBoundary: "document",
+            },
+          },
+        ]}
+      >
+        <StudioBookingPopper
+          studioInfo={studioInfo}
+          handleClose={handleBookingPopper}
+        />
+      </Popper>
+
+      <Button
+        align="center"
+        variant="outlined"
+        size="large"
+        sx={{
+          color: "background.default",
+          borderColor: "background.default",
+          borderRadius: "15px",
+          px: { lg: 3, md: 2, sm: 1.5, xs: 1 },
+          mx: { lg: 3, md: 2, sm: 1, xs: 1 },
+          lineHeight: 1.5,
+          width: { sm: "180px", xs: "110px" },
+        }}
+        onClick={() => console.log(studioId)}
+      >
+        Message Owner
+      </Button>
     </Box>
   );
 }

@@ -68,9 +68,10 @@ export default function ProCard({
                   flexWrap: "wrap",
                 }}
               >
-                {specialtiesList.map((chip) => (
+                {specialtiesList.map((chip, index) => (
                   <Chip
                     label={chip}
+                    key={`${chip}${index}`}
                     size="small"
                     color="info"
                     sx={{ mr: 0.5, mb: 0.5, alignSelf: "center" }}

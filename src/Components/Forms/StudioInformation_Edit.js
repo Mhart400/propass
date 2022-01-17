@@ -20,7 +20,7 @@ function StudioInformation_Edit({ studioInfo }) {
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
 
-  const [formValues, setFormValues] = useState(studioInfo);
+  const [formValues, setFormValues] = useState();
 
   //Refs
   const nameRef = useRef();
@@ -151,11 +151,13 @@ function StudioInformation_Edit({ studioInfo }) {
   }, [studioInfo]);
 
   return (
-    <Box component="form" sx={{ my: "15px", maxWidth: "500px" }}>
+    <Box component="form" sx={{ my: "15px", maxWidth: "500px" }} key={studioInfo.id}>
+      {formValues && <>      
       <Grid
         container
         direction="column"
         sx={{ justifyContent: "flex-start", alignItems: "flex-start", my: 2 }}
+        key={formValues.id}
       >
         <Box
           sx={{
@@ -326,6 +328,7 @@ function StudioInformation_Edit({ studioInfo }) {
           </Grid>
         </Grid>
       </Box>
+      </>}
     </Box>
   );
 }

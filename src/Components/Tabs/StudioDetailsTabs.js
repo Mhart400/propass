@@ -54,6 +54,7 @@ function StudioDetailsTabs({ studioInfo }) {
         pt: 2,
         
       }}
+      key={studioInfo.id}
     >
       <Tabs
         value={tabValue}
