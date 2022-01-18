@@ -4,6 +4,7 @@ import { useCart } from "../../Context/CartContext";
 import CartItem from "./CartItem";
 import CartTableHeaders from "./CartTableHeaders";
 import { useSnackbar } from 'notistack';
+import { useNavigate } from 'react-router-dom'
 
 const modalStyle = {
   position: "absolute",
@@ -26,6 +27,7 @@ const localeStringOptions = {
 function CartModal({ open, closeModal }) {
   const { cartItems, cartSummary, deleteItemFromCart } = useCart();
   const {enqueueSnackbar, closeSnackbar} = useSnackbar()
+  let navigate = useNavigate()
 
   const handleDelete = (index) => {
     deleteItemFromCart(index)
@@ -76,7 +78,7 @@ function CartModal({ open, closeModal }) {
           <Button variant="outlined" sx={{ mx: 2 }} onClick={closeModal}>
             Cancel
           </Button>
-          <Button variant="contained" sx={{ mx: 2 }} onClick={closeModal}>
+          <Button variant="contained" sx={{ mx: 2 }} onClick={() => {navigate('/checkout'); closeModal()}}>
             Checkout
           </Button>
         </Box>

@@ -16,11 +16,11 @@ export default function ProCard({
   return (
     <Card
       sx={{
-        display: "inline-flex",
-        m: 1,
+        display: "inline",
+        m: 0.5,
         mb: 3,
-        width: { lg: "23%", md: "32%", sm: "48%", xs: "100%" },
-        minWidth: "220px",
+        width: { lg: "20%", md: "22%", sm: "31%", xs: "48%" },
+        minWidth: "200px",
         alignSelf: "inherit",
       }}
     >

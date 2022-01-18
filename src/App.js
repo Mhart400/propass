@@ -18,6 +18,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { ColorModeContext, getDesignTokens } from "./Context/ThemeContext";
 import ProDetailScreen from "./Screens/ProScreens/ProDetailScreen";
 import StudioDetailScreen from "./Screens/StudioScreens/StudioDetailScreen";
+import CheckoutScreen from './Screens/CheckoutScreen'
 import { SnackbarProvider } from "notistack";
 import { Slide } from '@mui/material'
 
@@ -94,6 +95,11 @@ function App() {
                       exact
                       path={`/studioDetail/:studioId`}
                       element={<StudioDetailScreen />}
+                    />
+                    <Route
+                      exact
+                      path={`/checkout`}
+                      element={<CheckoutScreen />}
                     />
                   </Routes>
                   <FooterMain />

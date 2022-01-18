@@ -29,7 +29,7 @@ function CardBox({ role }) {
         direction="row"
         display="flex"
         alignContent="center"
-        justifyContent="center"
+        justifyContent="space-between"
         sx={{ flexWrap: "wrap" }}
       >
         {(userList && role === "owner")

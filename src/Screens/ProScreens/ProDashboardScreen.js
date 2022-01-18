@@ -28,7 +28,7 @@ function ProDashboardScreen() {
       
       
 
-      <Box sx={{ my: 2, p: 2, width: '100%', }}>
+      <Box sx={{ my: 2, width: '100%', }}>
         <Typography gutterBottom variant="h5" align='center' >
           Studios near me
         </Typography>
@@ -37,7 +37,7 @@ function ProDashboardScreen() {
       </Box>
       
       
-      <Box sx={{ my: 2, p: 2, width: '100%'}}>
+      <Box sx={{ my: 2, width: '100%'}}>
         <Typography gutterBottom variant="h5" align='center' >
           Pros on ProPass
         </Typography>

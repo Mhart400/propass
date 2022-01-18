@@ -8,6 +8,7 @@ import {
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db, auth } from "../firebase-config";
 
+
 export const AuthContext = React.createContext();
 
 export function useAuth() {
@@ -17,7 +18,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [userProfile, setUserProfile] = useState(JSON.parse(localStorage.getItem('userProfile')));
-  const [userId, setUserId] = useState();
+  
 
   function signup(email, password) {
     //return a user object
@@ -58,19 +59,22 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     // When user logs into another account or signs out
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log('UNSUSBSCRIBE TRIGGERED')
+      console.log(user)
       setCurrentUser(user);
-      
       if (user === null) {
         localStorage.clear()
-        setUserProfile();
+        setUserProfile()
       } else if ("email" in user) {
         getProfile(user.email);
       } else {
-        setUserProfile();
+        setUserProfile()
+        localStorage.clear()
+
       }
     });
     return unsubscribe;
-  }, []);
+  }, [auth]);
 
   const value = {
     auth,

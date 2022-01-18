@@ -23,10 +23,14 @@ const numFormat = {
   maximumFractionDigits: 2 
 }
 
+const year = new Date().getFullYear();
+const month = new Date().getMonth();
+const day = new Date().getDay();
+
 function StudioBookingPopper({ studioInfo, handleClose }) {
   const [dateValue, setDateValue] = useState(null);
-  const [startTime, setStartTime] = useState(null);
-  const [endTime, setEndTime] = useState(null);
+  const [startTime, setStartTime] = useState(new Date(year, month, day + 1, 8, 0));
+  const [endTime, setEndTime] = useState(new Date(year, month, day + 1, 9, 0));
   const [totalPrice, setTotalPrice] = useState(studioInfo.rate);
   const [duration, setDuration] = useState();
   const [clientNames, setClientNames] = useState([
@@ -59,9 +63,6 @@ function StudioBookingPopper({ studioInfo, handleClose }) {
   };
 
   const dateWithinYear = (dateInput) => {
-    const year = new Date().getFullYear();
-    const month = new Date().getMonth();
-    const day = new Date().getDay();
     return (
       dateInput >= new Date() && dateValue <= new Date(year + 1, month, day)
     );
@@ -179,8 +180,9 @@ function StudioBookingPopper({ studioInfo, handleClose }) {
                   />
                 )}
                 minDate={new Date()}
-                maxDate={new Date("12/31/2022")}
+                maxDate={new Date(year + 1, month, day)}
                 views={["month", "day"]}
+                
               />
               <TimePicker
                 label="Start Time"

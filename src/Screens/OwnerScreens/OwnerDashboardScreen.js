@@ -27,7 +27,7 @@ function OwnerDashboardScreen() {
       
       
       
-      <Box sx={{ my: 6, p: 2, width: '100%'}}>
+      <Box sx={{ my: 6, width: '100%'}}>
         <Typography gutterBottom variant="h5" align='center' >
           Studios near me
         </Typography>
@@ -35,7 +35,7 @@ function OwnerDashboardScreen() {
         <StudioList />
       </Box>
       
-      <Box sx={{ my: 6, p: 2, width: '100%'}}>
+      <Box sx={{ my: 6, width: '100%'}}>
         <Typography gutterBottom variant="h5" align='center' >
           Pros on ProPass
         </Typography>

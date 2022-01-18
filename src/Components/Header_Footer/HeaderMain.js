@@ -27,13 +27,13 @@ const pages = {
   owner: [
     { pageName: "Dashboard", pageLink: "/owner/dashboard" },
     { pageName: "My Profile", pageLink: "/owner/profile" },
-    { pageName: "Community", pageLink: "/owner/community" },
+    // { pageName: "Community", pageLink: "/owner/community" },
     { pageName: "Bookings", pageLink: "/owner/bookings" },
   ],
   pro: [
     { pageName: "Dashboard", pageLink: "/pro/dashboard" },
     { pageName: "My Profile", pageLink: "/pro/profile" },
-    { pageName: "Community", pageLink: "/pro/community" },
+    // { pageName: "Community", pageLink: "/pro/community" },
     { pageName: "Bookings", pageLink: "/pro/bookings" },
   ],
 };
@@ -56,6 +56,15 @@ const HeaderMain = () => {
   } catch (error) {
     console.log(error);
   }
+
+  const [cartVisible, setCartVisible] = React.useState(false)
+  React.useEffect(() => {
+    if (Array.isArray(cartItems) && cartItems.length > 0) {
+      setCartVisible(true)
+    } else {
+      setCartVisible(false)
+    }
+  }, [cartItems])
   
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -170,7 +179,7 @@ const HeaderMain = () => {
 
           {userProfile && (
             <>
-              {cartItems && cartItems.length > 0 && (
+              {cartVisible && cartItems && cartItems.length > 0 && (
                 <IconButton onClick={openCartModal} sx={{ mx: 1 }}>
                   <Badge
                     badgeContent={cartItems.length}
