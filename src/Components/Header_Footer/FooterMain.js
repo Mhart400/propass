@@ -10,12 +10,12 @@ function FooterMain() {
     <Box
       sx={{
         width: "100%",
-        backgroundColor: "background.default",
+        backgroundColor: "primary.dark",
         minHeight: "200px",
       }}
     >
       <Container maxWidth="lg" sx={{}}>
-        <Grid container direction="row" sx={{ display: "flex" }}>
+        <Grid container direction="row" sx={{ display: "flex", py: '75px' }}>
           <Grid
             item
             container
@@ -25,7 +25,7 @@ function FooterMain() {
             direction="column"
             sx={{ padding: "20px" }}
           >
-            <Typography variant='h4' color={'text.primary'} gutterBottom >ProPass</Typography>
+            <Typography variant='h4' color={'white'} gutterBottom >ProPass</Typography>
             <Box
               component="span"
               sx={{ display: "flex", alignItems: "center" }}
@@ -40,11 +40,11 @@ function FooterMain() {
             </Box>
           </Grid>
           <Grid item container xs={12} sm={6} md={4} direction="column" sx={{ padding: "20px" }}> 
-            <Typography variant='h6' align='center' gutterBottom sx={{color: 'text.primary'}} >We're Social!</Typography>
+            <Typography variant='h6' align='center' gutterBottom sx={{color: 'white'}} >We're Social!</Typography>
             <Box sx={{display: 'flex', justifyContent: 'space-evenly'}}>
-                <InstagramIcon sx={{color: 'primary.main', fontSize: '40px'}}/>
-                <FacebookIcon sx={{color: 'primary.main', fontSize: '40px'}}/>
-                <TwitterIcon sx={{color: 'primary.main', fontSize: '40px'}}/>
+                <InstagramIcon sx={{color: 'secondary.main', fontSize: '40px'}}/>
+                <FacebookIcon sx={{color: 'secondary.main', fontSize: '40px'}}/>
+                <TwitterIcon sx={{color: 'secondary.main', fontSize: '40px'}}/>
                 
             </Box>
           </Grid>

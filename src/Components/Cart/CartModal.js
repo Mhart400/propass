@@ -78,7 +78,7 @@ function CartModal({ open, closeModal }) {
           <Button variant="outlined" sx={{ mx: 2 }} onClick={closeModal}>
             Cancel
           </Button>
-          <Button variant="contained" sx={{ mx: 2 }} onClick={() => {navigate('/checkout'); closeModal()}}>
+          <Button variant="contained" sx={{ mx: 2 }} onClick={() => {navigate('/pro/checkout'); closeModal()}}>
             Checkout
           </Button>
         </Box>

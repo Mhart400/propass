@@ -28,7 +28,7 @@ const pages = {
     { pageName: "Dashboard", pageLink: "/owner/dashboard" },
     { pageName: "My Profile", pageLink: "/owner/profile" },
     // { pageName: "Community", pageLink: "/owner/community" },
-    { pageName: "Bookings", pageLink: "/owner/bookings" },
+    // { pageName: "Bookings", pageLink: "/owner/bookings" },
   ],
   pro: [
     { pageName: "Dashboard", pageLink: "/pro/dashboard" },

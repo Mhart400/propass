@@ -37,8 +37,13 @@ export function CartProvider({ children }) {
     localStorage.setItem("cart", JSON.stringify(newCart));
   };
 
+  const clearCart = () => {
+    setCartItems();
+    localStorage.removeItem("cart");
+  }
+
   useEffect(() => {
-    // Update cartTotal
+    // Update cartTotal (price)
     let sumPrice = 0;
     try {
       cartItems.forEach((item) => {
@@ -52,10 +57,11 @@ export function CartProvider({ children }) {
   }, [cartItems]);
 
   useEffect(() => {
+    // clearCart if user logs out
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log('UNSUSBSCRIBE TRIGGERED')
       if (!user || user === null || !"email" in user) {
-        setCartItems()
+        clearCart()
       } 
     });
     return unsubscribe;
@@ -69,6 +75,7 @@ export function CartProvider({ children }) {
     addItemToCart,
     cartSummary,
     deleteItemFromCart,
+    clearCart,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

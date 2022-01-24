@@ -14,18 +14,21 @@ import { useCart } from "../Context/CartContext";
 import CartTableHeaders from "../Components/Cart/CartTableHeaders";
 import CartItem from "../Components/Cart/CartItem";
 import { useSnackbar } from "notistack";
+import TermsConditionsBox from "../Components/Cart/TermsConditionsBox";
+import useCheckout from "../hooks/useCheckout";
+import { useNavigate } from "react-router-dom";
 
-
-const localeStringOptions = { 
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2 
-  }
-
+const localeStringOptions = {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+};
 
 function CheckoutScreen() {
-  const { cartItems, deleteItemFromCart, cartSummary } = useCart();
+  const { cartItems, deleteItemFromCart, cartSummary, clearCart } = useCart();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [confirmed, setConfirmed] = useState(false);
+  const { saveCartItemsToFirestore } = useCheckout();
+  const navigate = useNavigate();
 
   const handleDelete = (index) => {
     deleteItemFromCart(index);
@@ -36,13 +39,30 @@ function CheckoutScreen() {
     setConfirmed(e.target.checked);
   };
 
+  // Function to checkout (save to firestore, remove from CartContext, Process Payment *future*
+  const handleCheckout = () => {
+    try {
+      // Step 1. Save to FireStore
+      saveCartItemsToFirestore();
+      // Step 2. Display Success Message
+      enqueueSnackbar(`${cartItems.length} sessions successfully booked!`, {
+        variant: "success",
+      });
+      // Step 3. Clear cartItems and navigate to Bookings Screen
+      clearCart();
+      navigate('/pro/bookings');
+    } catch (error) {
+      enqueueSnackbar("Error. Please Try Again", { variant: "error" });
+    }
+  };
+
   return (
     <Layout>
       <PageTitle>Checkout</PageTitle>
 
       <Box>
         <CartTableHeaders />
-        {cartItems.map((item, index) => {
+        {cartItems && cartItems.map((item, index) => {
           return (
             <CartItem
               key={`${item.studioId}_${item.startTime}`}
@@ -82,11 +102,16 @@ function CheckoutScreen() {
         <Typography variant="h6" align="center">
           Confirm & Pay
         </Typography>
+        <TermsConditionsBox />
         <Box sx={{ display: "flex", alignItems: "center", my: 1 }}>
           <Checkbox checked={confirmed} onChange={handleCheckbox} />
           <Typography>I agree to the terms & conditions</Typography>
         </Box>
-        <Button variant="contained" disabled={!confirmed}>
+        <Button
+          variant="contained"
+          disabled={!confirmed}
+          onClick={handleCheckout}
+        >
           Pay & Book!
         </Button>
       </Box>

@@ -18,9 +18,10 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { ColorModeContext, getDesignTokens } from "./Context/ThemeContext";
 import ProDetailScreen from "./Screens/ProScreens/ProDetailScreen";
 import StudioDetailScreen from "./Screens/StudioScreens/StudioDetailScreen";
-import CheckoutScreen from './Screens/CheckoutScreen'
+import CheckoutScreen from "./Screens/CheckoutScreen";
 import { SnackbarProvider } from "notistack";
-import { Slide } from '@mui/material'
+import { Slide, Box } from "@mui/material";
+import ProBookingsScreen from "./Screens/ProScreens/ProBookingsScreen";
 
 function App() {
   const [mode, setMode] = React.useState("light");
@@ -58,50 +59,57 @@ function App() {
                   }}
                 >
                   <HeaderMain />
-                  <Routes>
-                    <Route exact path="/" element={<HomeScreen />} />
-                    <Route path="/signup" element={<SignupScreen />} />
-                    <Route path="/login" element={<LoginScreen />} />
-                    <Route element={<OwnerRoute />}>
+                    <Routes>
+                      <Route exact path="/" element={<HomeScreen />} />
+                      <Route path="/signup" element={<SignupScreen />} />
+                      <Route path="/login" element={<LoginScreen />} />
+                      <Route element={<OwnerRoute />}>
+                        <Route
+                          exact
+                          path="/owner/dashboard"
+                          element={<OwnerDashboardScreen />}
+                        />
+                        <Route
+                          exact
+                          path="/owner/profile"
+                          element={<OwnerProfileScreen />}
+                        />
+                      </Route>
+
+                      <Route path="/pro" element={<ProRoute />}>
+                        <Route
+                          exact
+                          path="/pro/dashboard"
+                          element={<ProDashboardScreen />}
+                        />
+                        <Route
+                          exact
+                          path="/pro/profile"
+                          element={<ProProfileScreen />}
+                        />
+                        <Route
+                          exact
+                          path={`/pro/checkout`}
+                          element={<CheckoutScreen />}
+                        />
+                        <Route
+                          exact
+                          path={`/pro/bookings`}
+                          element={<ProBookingsScreen />}
+                        />
+                      </Route>
+
                       <Route
                         exact
-                        path="/owner/dashboard"
-                        element={<OwnerDashboardScreen />}
+                        path={`/proDetail/:userId`}
+                        element={<ProDetailScreen />}
                       />
                       <Route
                         exact
-                        path="/owner/profile"
-                        element={<OwnerProfileScreen />}
+                        path={`/studioDetail/:studioId`}
+                        element={<StudioDetailScreen />}
                       />
-                    </Route>
-                    <Route path="/pro" element={<ProRoute />}>
-                      <Route
-                        exact
-                        path="/pro/dashboard"
-                        element={<ProDashboardScreen />}
-                      />
-                      <Route
-                        exact
-                        path="/pro/profile"
-                        element={<ProProfileScreen />}
-                      />
-                    </Route>
-                    <Route
-                      exact
-                      path={`/proDetail/:userId`}
-                      element={<ProDetailScreen />}
-                    />
-                    <Route
-                      exact
-                      path={`/studioDetail/:studioId`}
-                      element={<StudioDetailScreen />}
-                    />
-                    <Route
-                      exact
-                      path={`/checkout`}
-                      element={<CheckoutScreen />}
-                    />
-                  </Routes>
+                    </Routes>
                   <FooterMain />
                 </div>
               </BrowserRouter>
