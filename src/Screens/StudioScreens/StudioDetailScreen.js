@@ -7,6 +7,7 @@ import Layout from "../../Components/Layout/Layout";
 import Slider from "../../Components/Slider/Slider";
 import StudioDetailBooking from "../../Components/BookingWidgets/StudioDetailBooking";
 import AboutTheStudio from "../../Components/StudioDetails/AboutTheStudio";
+import { useAuth } from "../../Context/AuthContext";
 
 function StudioDetailScreen() {
   const { studioId } = useParams();
@@ -14,6 +15,7 @@ function StudioDetailScreen() {
   const [studioInfo, setStudioInfo] = useState();
   const { retrieveStudioData_allNested } = useFirestore();
   const [slideList, setSlideList] = useState();
+  const { userProfile} = useAuth();
 
   useEffect(() => {
     retrieveStudioData_allNested(studioId, setStudioInfo);
@@ -76,7 +78,7 @@ function StudioDetailScreen() {
           >
             <AboutTheStudio studioInfo={studioInfo} />
           </Grid>
-          {studioInfo && <StudioDetailBooking studioInfo={studioInfo} />}
+          {studioInfo && userProfile.isPro === true && <StudioDetailBooking studioInfo={studioInfo} />}
         </Grid>
       )}
     </Layout>

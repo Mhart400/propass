@@ -15,10 +15,12 @@ import {
   serverTimestamp,
   arrayUnion,
 } from "firebase/firestore";
+import { useSnackbar } from 'notistack';
 
 function useFirestore_Bookings() {
   const { userProfile } = useAuth();
   const [bookings, setBookings] = useState();
+  const {enqueueSnackbar, closeSnackbar} = useSnackbar()
   
   async function retrieveBookings(setterFunction) {
     const q = query(collection(db, "Bookings"), where("proId", "==", userProfile.id));
@@ -29,12 +31,38 @@ function useFirestore_Bookings() {
           docObject["id"] = doc.id;
           documents.push(docObject);
         });
-        // documents.sort((first, second) => second.startDate - first.year);
+        documents.sort((first, second) => first.date - second.date);
+        setterFunction(documents);
+      });
+  }
+  
+  async function retrieveBookingsByOwner(setterFunction) {
+    const q = query(collection(db, "Bookings"), where("ownerId", "==", userProfile.id));
+    onSnapshot(q, (snap) => {
+        let documents = [];
+        snap.forEach((doc) => {
+          let docObject = doc.data();
+          docObject["id"] = doc.id;
+          documents.push(docObject);
+        });
+        documents.sort((first, second) => first.date - second.date);
         setterFunction(documents);
       });
   }
 
-  return {retrieveBookings};
+  async function deleteBooking(bookingId) {
+    console.log("Deleting id# " + bookingId);
+    try {
+      const x = await deleteDoc(doc(db, "Bookings", bookingId))
+      enqueueSnackbar("Success: Booking Cancelled", {variant: 'info'})
+      return x
+    } catch (error) {
+      console.log("Unable to delete Booking. Message: " + error)
+    }
+  }
+
+
+  return {retrieveBookings, retrieveBookingsByOwner, deleteBooking};
 }
 
 export default useFirestore_Bookings;

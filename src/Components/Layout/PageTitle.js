@@ -9,7 +9,7 @@ function PageTitle({children}) {
         color: "primary.main",
         fontWeight: 'bold',
         my: 2,
-        typography: { xs: "h4", sm: "h3", md: "h3", lg: "h2" },
+        typography: { xs: "h5", sm: "h4", md: "h4", lg: "h3" },
         width: '100%'
       }}
     >

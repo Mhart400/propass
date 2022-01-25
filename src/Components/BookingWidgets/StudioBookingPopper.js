@@ -17,6 +17,8 @@ import TimePicker from "@mui/lab/TimePicker";
 import { formatDistanceStrict, isValid } from "date-fns";
 import { useCart } from "../../Context/CartContext";
 import { useSnackbar } from 'notistack';
+import { useAuth } from "../../Context/AuthContext";
+
 
 const numFormat = {
   minimumFractionDigits: 2,
@@ -36,7 +38,7 @@ function StudioBookingPopper({ studioInfo, handleClose }) {
   const [clientNames, setClientNames] = useState([
     { name: "", id: Math.random() },
   ]);
-
+  const { userProfile } = useAuth()
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const { addItemToCart } = useCart();
@@ -57,6 +59,11 @@ function StudioBookingPopper({ studioInfo, handleClose }) {
       totalPrice: totalPrice,
       clientList: clientNames,
       mainImage: studioInfo.MainImage.url,
+      ownerId: studioInfo.ownerId,
+      proAvatarUrl: userProfile.avatarUrl,
+      proFirstName: userProfile.firstName,
+      proLastName: userProfile.lastName,
+      proEmail: userProfile.email,
     });
     enqueueSnackbar(`Session Added to Cart!`, {variant: 'success'})
     handleClose()

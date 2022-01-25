@@ -9,57 +9,55 @@ import {
 import Layout from "../../Components/Layout/Layout";
 import PageTitle from "../../Components/Layout/PageTitle";
 import useFirestore_Bookings from "../../hooks/useFirestore_Bookings";
-import ProBookingItem from "../../Components/Bookings/ProBookingItem";
+import OwnerBookingItem from "../../Components/Bookings/OwnerBookingItem";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ConfirmCancelBookingModal from "../../Components/Bookings/ConfirmCancelBookingModal";
-import PageLoading from "../../Components/PageLoading";
 
-function ProBookingsScreen() {
-  const { retrieveBookings, deleteBooking } = useFirestore_Bookings();
+function OwnerBookingsScreen() {
+  const { retrieveBookingsByOwner } = useFirestore_Bookings();
   const [bookings, setBookings] = useState();
-  const [loading, setLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [modalItem, setModalItem] = useState();
+  const [bookingsThisWeek, setBookingsThisWeek] = useState();
 
-  async function handleCloseModal(toDelete) {
-    setShowModal(false);
-    if (toDelete === true) {
-      setLoading(true);
-      await deleteBooking(modalItem.id);
-      setBookings(bookings.filter(item => item.id !== modalItem.id))
-      setLoading(false);
-    }
-    setModalItem();
-  }
+  //Handle Times for filtering/Sorting
+  const today = new Date();
+  const nextWeek = new Date(new Date().setDate(today.getDate() + 7));
+  const itemDate = (item) => {
+    return new Date(item.date.toDate());
+  };
 
-  const handleCancelBooking = (item) => {
-    setModalItem(item);
-    setShowModal(true);
+  const thisWeeksBookings = () => {
+    return bookings.filter((item) => {
+      const sessionDate = itemDate(item);
+      const inNextWeek = sessionDate < nextWeek && sessionDate >= today;
+      return inNextWeek;
+    });
   };
 
   useEffect(() => {
-    retrieveBookings(setBookings);
+    //Retrieve all bookings
+    retrieveBookingsByOwner(setBookings);
   }, []);
+
+  useEffect(() => {
+      //Filter bookings to get those in next 7 days
+    if (bookings && bookings.length > 0) {
+      setBookingsThisWeek(thisWeeksBookings());
+    }
+  }, [bookings]);
 
   return (
     <Layout>
-      {(loading || !bookings) && <PageLoading />}
-      <ConfirmCancelBookingModal
-        open={showModal}
-        closeModal={handleCloseModal}
-        item={modalItem}
-      />
       <PageTitle>Booked Sessions</PageTitle>
+      
       <Box sx={{ py: 1, maxWidth: "850px", mx: "auto" }}>
         <Accordion defaultExpanded sx={{ my: 2 }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="h6" sx={{ fontWeight: "bold" }} align="center">
-              This Week:
-            </Typography>
+            {bookingsThisWeek && <Typography variant="h6" sx={{ fontWeight: "bold" }} align="center">
+              {`${bookingsThisWeek.length} Sessions This Week`}
+            </Typography>}
           </AccordionSummary>
           <AccordionDetails>
-            {bookings &&
-              bookings
+            {bookingsThisWeek && bookingsThisWeek.length > 0 &&
+              bookingsThisWeek
                 .sort((a, b) => {
                   const dateA = new Date(a.date.toDate()).getDay();
                   const dateB = new Date(b.date.toDate()).getDay();
@@ -70,25 +68,13 @@ function ProBookingsScreen() {
                   }
                 })
                 .map((item) => {
-                  const today = new Date();
-                  const nextWeek = new Date(
-                    new Date().setDate(today.getDate() + 7)
-                  );
-                  const sessionDate = new Date(item.date.toDate());
-                  //DISPLAY IF WITHIN NEXT 7 DAYS
-                  const toDisplay =
-                    sessionDate < nextWeek && sessionDate >= today;
                   return (
                     <Box
                       sx={{
                         width: "100%",
-                        display: toDisplay === true ? "block" : "none",
                       }}
                     >
-                      <ProBookingItem
-                        item={item}
-                        handleCancelBooking={handleCancelBooking}
-                      />
+                      <OwnerBookingItem item={item} />
                     </Box>
                   );
                 })}
@@ -128,10 +114,7 @@ function ProBookingsScreen() {
                         display: toDisplay === true ? "block" : "none",
                       }}
                     >
-                      <ProBookingItem
-                        item={item}
-                        handleCancelBooking={handleCancelBooking}
-                      />
+                      <OwnerBookingItem item={item} />
                     </Box>
                   );
                 })}
@@ -171,10 +154,7 @@ function ProBookingsScreen() {
                         display: toDisplay === true ? "block" : "none",
                       }}
                     >
-                      <ProBookingItem
-                        item={item}
-                        handleCancelBooking={handleCancelBooking}
-                      />
+                      <OwnerBookingItem item={item} />
                     </Box>
                   );
                 })}
@@ -185,4 +165,4 @@ function ProBookingsScreen() {
   );
 }
 
-export default ProBookingsScreen;
+export default OwnerBookingsScreen;

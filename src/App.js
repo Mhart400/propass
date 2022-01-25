@@ -22,6 +22,7 @@ import CheckoutScreen from "./Screens/CheckoutScreen";
 import { SnackbarProvider } from "notistack";
 import { Slide, Box } from "@mui/material";
 import ProBookingsScreen from "./Screens/ProScreens/ProBookingsScreen";
+import OwnerBookingsScreen from "./Screens/OwnerScreens/OwnerBookingsScreen";
 
 function App() {
   const [mode, setMode] = React.useState("light");
@@ -63,6 +64,7 @@ function App() {
                       <Route exact path="/" element={<HomeScreen />} />
                       <Route path="/signup" element={<SignupScreen />} />
                       <Route path="/login" element={<LoginScreen />} />
+                      
                       <Route element={<OwnerRoute />}>
                         <Route
                           exact
@@ -73,6 +75,11 @@ function App() {
                           exact
                           path="/owner/profile"
                           element={<OwnerProfileScreen />}
+                        />
+                        <Route
+                          exact
+                          path="/owner/bookings"
+                          element={<OwnerBookingsScreen />}
                         />
                       </Route>
 
