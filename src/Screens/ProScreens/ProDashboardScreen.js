@@ -3,17 +3,17 @@ import React, { useState } from "react";
 
 import { useAuth } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import Layout from "../../Components/Layout/Layout";
+import GreyLayout from "../../Components/Layout/GreyLayout";
 import PageLoading from "../../Components/PageLoading";
 import PageTitle from "../../Components/Layout/PageTitle";
 import CardBox from "../../Components/Layout/CardBox";
 import Slider from "../../Components/Slider/Slider";
-import StudioList from '../../Components/Layout/StudioList'
+import StudioList from "../../Components/Layout/StudioList";
+import DashboardBox from "../../Components/Layout/DashboardBox";
 
 function ProDashboardScreen() {
-  const { logout, userProfile } = useAuth();
+  const { userProfile } = useAuth();
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const images = [
     "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80",
@@ -23,43 +23,46 @@ function ProDashboardScreen() {
   ];
 
   const output = (
-    <Grid container direction="column" sx={{width: '100%', overflow: 'hidden'}} >
-      <PageTitle>My Dashboard</PageTitle>
+    <Grid
+      container
+      direction='column'
+    >
       
+        <DashboardBox sx={{ my: 2, p: 2, backgroundColor: "background.main", }} >
+          <Typography variant="h5">Hello, {userProfile.firstName}!</Typography>
+        </DashboardBox>
       
 
-      <Box sx={{ my: 2, width: '100%', }}>
-        <Typography gutterBottom variant="h5" align='center' >
+      <DashboardBox>
+        <Typography gutterBottom variant="h5" align="center">
           Studios near me
         </Typography>
-        <Divider  />
+        <Divider />
         <StudioList />
-      </Box>
-      
-      
-      <Box sx={{ my: 2, width: '100%'}}>
-        <Typography gutterBottom variant="h5" align='center' >
+      </DashboardBox>
+
+      <DashboardBox sx={{ my: 2, p: 2, width: "100%", backgroundColor: "background.main" }}>
+        <Typography gutterBottom variant="h5" align="center">
           Pros on ProPass
         </Typography>
         <Divider />
         <CardBox role="pro" />
-      </Box>
-      
+      </DashboardBox>
 
       <Typography>This page will contain:</Typography>
       <ul>
         <li>List of Upcoming Bookings</li>
         <li>Gyms near me (click on gym to make a booking)</li>
-        <Slider slides={images} />
+        {/* <Slider slides={images} /> */}
       </ul>
     </Grid>
   );
 
   return (
-    <Layout >
+    <GreyLayout>
       {loading && <PageLoading />}
       {output}
-    </Layout>
+    </GreyLayout>
   );
 }
 

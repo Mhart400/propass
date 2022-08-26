@@ -112,7 +112,7 @@ function StudioBookingPopper({ studioInfo, handleClose }) {
     <Box
       sx={{
         minHeight: "300px",
-        width: "300px",
+        width: "350px",
         zIndex: 99,
         borderWidth: "2px",
         borderStyle: "solid",
@@ -129,7 +129,7 @@ function StudioBookingPopper({ studioInfo, handleClose }) {
             width: "100%",
           }}
         >
-          <Box
+          {/* <Box
             height="100%"
             width="100%"
             sx={{
@@ -146,14 +146,14 @@ function StudioBookingPopper({ studioInfo, handleClose }) {
               backgroundImage: `linear-gradient(to bottom,#000000,#00008b90)`,
               opacity: 0.95,
             }}
-          />
+          /> */}
 
           <Box
             sx={{
               position: "absolute",
               top: "15px",
               width: "100%",
-              color: "white",
+              // color: "white",
             }}
           >
             <Typography align="center" variant="subtitle1">
