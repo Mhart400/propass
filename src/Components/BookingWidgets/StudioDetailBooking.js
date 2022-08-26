@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Typography, Popper, Slide } from "@mui/material";
+import { Box, Button, Typography, Popper, Paper, AppBar } from "@mui/material";
 import { useParams } from "react-router-dom";
 import StudioBookingPopper from "./StudioBookingPopper";
 
@@ -31,9 +31,13 @@ function StudioDetailBooking({ studioInfo }) {
         justifyContent: "flex-start",
         alignItems: "center",
       }}
-    >
+      >
       <Box
+        component={Paper}
+        elevation={3}
+        
         sx={{
+          boxShadow: "5px 5px 5px white",
           width: "100%",
           height: "100%",
           position: "absolute",
@@ -41,6 +45,7 @@ function StudioDetailBooking({ studioInfo }) {
           left: 0,
           backgroundColor: "primary.dark",
           opacity: "99%",
+          boxShadow: '0px -2px 5px 1px #b2bcca20',
         }}
       />
 

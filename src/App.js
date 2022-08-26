@@ -23,6 +23,7 @@ import { SnackbarProvider } from "notistack";
 import { Slide, Box } from "@mui/material";
 import ProBookingsScreen from "./Screens/ProScreens/ProBookingsScreen";
 import OwnerBookingsScreen from "./Screens/OwnerScreens/OwnerBookingsScreen";
+import ProMessagesScreen from "./Screens/ProScreens/ProMessagesScreen";
 
 function App() {
   const [mode, setMode] = React.useState("light");
@@ -103,6 +104,11 @@ function App() {
                           exact
                           path={`/pro/bookings`}
                           element={<ProBookingsScreen />}
+                        />
+                        <Route
+                          exact
+                          path={`/pro/messages`}
+                          element={<ProMessagesScreen />}
                         />
                       </Route>
 

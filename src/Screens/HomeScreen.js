@@ -22,7 +22,7 @@ const HomeScreen = () => {
         height="700px"
         imgSrc={image}
         imgAlt="skdjfksdfksjd"
-        title="Hi Rich!!"
+        title="Launching Soon"
         subtitle="Connecting Pro's and Owners"
         btnText={auth.currentUser === null ? "Sign-up" : "Continue to Dashboard"}
         btnLink={
