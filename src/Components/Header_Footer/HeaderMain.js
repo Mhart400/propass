@@ -27,14 +27,14 @@ const pages = {
   owner: [
     { pageName: "Dashboard", pageLink: "/owner/dashboard" },
     { pageName: "My Profile", pageLink: "/owner/profile" },
-    // { pageName: "Community", pageLink: "/owner/community" },
     { pageName: "Bookings", pageLink: "/owner/bookings" },
+    { pageName: "Messages", pageLink: "/owner/messages" },
   ],
   pro: [
     { pageName: "Dashboard", pageLink: "/pro/dashboard" },
     { pageName: "My Profile", pageLink: "/pro/profile" },
-    // { pageName: "Community", pageLink: "/pro/community" },
     { pageName: "Bookings", pageLink: "/pro/bookings" },
+    { pageName: "Messages", pageLink: "/pro/messages" },
   ],
 };
 const settings = [<ToggleDarkMode />, "Logout"];
@@ -164,11 +164,11 @@ const HeaderMain = () => {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {userProfile &&
               pages[userRole].map((page) => (
-                <Box sx={{ marginX: "10px" }} key={`${Math.random()}${page.pageName}`}>
+                <Box sx={{ marginX: "30px" }} key={`${Math.random()}${page.pageName}`}>
                   <CustomLink
                     key={page.pageName}
                     to={page.pageLink}
-                    activeStyle={{ fontWeight: "bold", textDecoration: "none" }}
+                    activeStyle={{ fontWeight: "bold", textDecoration: "underline", }}
                     inactiveStyle={{ textDecoration: "none" }}
                   >
                     {page.pageName}
