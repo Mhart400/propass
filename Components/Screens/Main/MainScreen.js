@@ -5,7 +5,7 @@ import useFirebase from "../../../Actions/useFirebase";
 
 // Screens
 import HomeScreen from "./home/HomeScreen";
-import AccountScreen from "./account/AccountScreen";
+import AccountMainScreen from "./account/AccountMainScreen";
 import SessionsScreen from "./sessions/SessionsScreen";
 import ClientsScreen from "./clients/ClientsScreen";
 import MessagesScreen from "./messges/MessagesScreen";
@@ -106,8 +106,9 @@ export default function MainScreen({ theme, navigation }) {
       />
       <Tab.Screen
         name="Account"
-        component={AccountScreen}
+        component={AccountMainScreen}
         options={{
+          headerShown: true,
           tabBarLabel: "Account",
           tabBarActiveTintColor: "black",
           tabBarInactiveTintColor: "#B6B6B6",
@@ -123,7 +124,11 @@ export default function MainScreen({ theme, navigation }) {
         listeners={({ navigation }) => ({
           tabPress: (event) => {
             event.preventDefault();
-            navigation.navigate("Account", { uid: auth.currentUser.uid });
+            navigation.navigate("Account", {
+              params: {
+                uid: auth.currentUser.uid,
+              },
+            });
           },
         })}
       />

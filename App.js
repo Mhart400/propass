@@ -22,6 +22,7 @@ import ProfileScreen from "./Components/Screens/Main/account/ProfileScreen";
 import MyStudiosScreen from "./Components/Screens/Main/account/MyStudiosScreen";
 import MyTrainingScreen from "./Components/Screens/Main/account/MyTrainingScreen";
 import ManagePasswordScreen from "./Components/Screens/Main/account/ManagePasswordScreen";
+import ManageBillingScreen from "./Components/Screens/Main/account/ManageBillingScreen";
 
 //REDUX
 import { Provider as ReduxProvider } from "react-redux";
@@ -78,30 +79,55 @@ export default function App() {
       <PaperProvider theme={theme}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="MainLanding">
-            <Stack.Screen
+            <Stack.Screen // THIS IS THE MAIN TABS
               name="MainLanding"
               component={MainScreen}
               options={{ headerShown: false, title: "Home" }}
             />
             <Stack.Screen
-              name="EditProfile"
+              name="Profile"
               component={ProfileScreen}
-              options={{ headerShown: true, title: "Manage Profile" }}
+              options={{
+                title: "Profile",
+                headerShown: true,
+                headerBackTitle: "Account",
+              }}
             />
             <Stack.Screen
-              name="EditStudios"
+              name="Studios"
               component={MyStudiosScreen}
-              options={{ headerShown: true, title: "My Studios" }}
+              options={{
+                headerShown: true,
+                title: "Studios",
+                headerBackTitle: "Account",
+              }}
             />
             <Stack.Screen
-              name="EditTraining"
+              name="Training"
               component={MyTrainingScreen}
-              options={{ headerShown: true, title: "My Training" }}
+              options={{
+                headerShown: true,
+                title: "Training",
+                headerBackTitle: "Account",
+              }}
             />
             <Stack.Screen
-              name="EditPassword"
+              name="Password"
               component={ManagePasswordScreen}
-              options={{ headerShown: true, title: "Manage Password" }}
+              options={{
+                headerShown: true,
+                title: "Password",
+                headerBackTitle: "Account",
+              }}
+            />
+            <Stack.Screen
+              name="Billing"
+              component={ManageBillingScreen}
+              options={{
+                headerShown: true,
+                title: "Billing",
+                headerBackTitle: "Account",
+              }}
             />
           </Stack.Navigator>
         </NavigationContainer>
